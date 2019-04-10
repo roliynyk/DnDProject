@@ -1,5 +1,4 @@
 import requests
-import json
 
 url = 'http://www.dnd5eapi.co/api/'
 r = requests.get(url)
