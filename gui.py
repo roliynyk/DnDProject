@@ -143,7 +143,7 @@ d100.pack()
 d100.place(relx=0.75, rely=0.55, width=200, height=30)
 
 createTextInfo()
-#Example caracter creation call
+#Example caracter creation call and method/variable calls
 Blarg = createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1})
 print(Blarg.name)
 print(Blarg.returnStat("Str"))
