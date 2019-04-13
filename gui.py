@@ -5,7 +5,13 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 
 def rollDice(sides):
-   print("call worked")
+   random.seed()
+   number = str(random.randint(0, sides))
+   #output the number wherever we need it to display
+   statInfo = tk.Text(master, height=1, width=20)
+   statInfo.pack()
+   statInfo.insert(END, number)
+   statInfo.place(relx=0.75, rely=0.6)
 
 def helloCallBack():
    tk.messagebox.showinfo( "Hello Python", "Hello World")
@@ -83,9 +89,9 @@ background.pack()
 background.place(relx=0.15, rely=0.45, width=200, height=30)
 
 #roll types
-str = tk.Button(master, text ="Str", command = helloCallBack)
-str.pack()
-str.place(relx=0.5, rely=0.3, width=200, height=30)
+stren = tk.Button(master, text ="Str", command = helloCallBack)
+stren.pack()
+stren.place(relx=0.5, rely=0.3, width=200, height=30)
 
 dex = tk.Button(master, text ="Dex", command = helloCallBack)
 dex.pack()
@@ -95,9 +101,9 @@ con = tk.Button(master, text ="Con", command = helloCallBack)
 con.pack()
 con.place(relx=0.5, rely=0.4, width=200, height=30)
 
-int = tk.Button(master, text ="Int", command = helloCallBack)
-int.pack()
-int.place(relx=0.5, rely=0.45, width=200, height=30)
+intel = tk.Button(master, text ="Int", command = helloCallBack)
+intel.pack()
+intel.place(relx=0.5, rely=0.45, width=200, height=30)
 
 wis = tk.Button(master, text ="Wis", command = helloCallBack)
 wis.pack()
@@ -108,27 +114,27 @@ cha.pack()
 cha.place(relx=0.5, rely=0.55, width=200, height=30)
 
 #dice rolls
-d4 = tk.Button(master, text ="D4", command = helloCallBack)
+d4 = tk.Button(master, text ="D4", command = lambda : rollDice(4))
 d4.pack()
 d4.place(relx=0.75, rely=0.3, width=200, height=30)
 
-d6 = tk.Button(master, text ="D6", command = helloCallBack)
+d6 = tk.Button(master, text ="D6", command = lambda : rollDice(6))
 d6.pack()
 d6.place(relx=0.75, rely=0.35, width=200, height=30)
 
-d8 = tk.Button(master, text ="D8", command = helloCallBack)
+d8 = tk.Button(master, text ="D8", command = lambda : rollDice(8))
 d8.pack()
 d8.place(relx=0.75, rely=0.4, width=200, height=30)
 
-d10 = tk.Button(master, text ="D10", command = helloCallBack)
+d10 = tk.Button(master, text ="D10", command = lambda : rollDice(10))
 d10.pack()
 d10.place(relx=0.75, rely=0.45, width=200, height=30)
 
-d20 = tk.Button(master, text ="D20", command = helloCallBack)
+d20 = tk.Button(master, text ="D20", command = lambda : rollDice(20))
 d20.pack()
 d20.place(relx=0.75, rely=0.5, width=200, height=30)
 
-d100 = tk.Button(master, text ="D20", command = helloCallBack)
+d100 = tk.Button(master, text ="D100", command = lambda : rollDice(100))
 d100.pack()
 d100.place(relx=0.75, rely=0.55, width=200, height=30)
 
