@@ -1,5 +1,6 @@
 import tkinter as tk
 import random
+import character
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
@@ -28,6 +29,10 @@ def createTextInfo():
    statInfo.pack()
    statInfo.insert(END, "STR\nDEX\nCON\nINT\nWIS\nCHA\n")
    statInfo.place(relx=0.01, rely=0.3)
+
+def createCharacter(name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
+   character_1 = character.Character(name, class_type, race, background, alignment, experience, health, armor, profficiency, stats)
+   character_1.printName()
 
 master = tk.Tk()
 C = tk.Canvas(master, bg=None, height=900, width=900)
@@ -139,4 +144,5 @@ d100.pack()
 d100.place(relx=0.75, rely=0.55, width=200, height=30)
 
 createTextInfo()
+createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1})
 master.mainloop()
