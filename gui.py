@@ -15,7 +15,7 @@ def rollDice(sides):
    statInfo.place(relx=0.75, rely=0.6)
 
 def helloCallBack():
-   tk.messagebox.showinfo( "Hello Python", "Hello World")
+   tk.messagebox.showinfo("Hello Python", "Hello World")
 
 #Create text for the character such as name and stats
 def createTextInfo():

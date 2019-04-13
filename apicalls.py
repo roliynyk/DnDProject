@@ -35,6 +35,20 @@ def getSkillsData():
 
     return skillDictionary
 
+def getRaces():
+    race_list = []
+    for i in getRaceData():
+        race_list.append(i['name'])
+    return race_list
 
-for i in getSkillsData():
-    print(i)
+def getClasses():
+    class_list = []
+    for i in getClassData():
+        class_list.append(i['name'])
+    return class_list
+
+def getSkills():
+    skills_list = []
+    for i in getClassData():
+        skills_list.append(i['name'])
+    return skills_list
