@@ -1,6 +1,11 @@
 import tkinter as tk
+import random
 from tkinter import *
+from tkinter import messagebox
 from PIL import Image, ImageTk
+
+def rollDice(sides):
+   print("call worked")
 
 def helloCallBack():
    tk.messagebox.showinfo( "Hello Python", "Hello World")
@@ -73,7 +78,7 @@ skills = tk.Button(master, text ="Skills", command = helloCallBack)
 skills.pack()
 skills.place(relx=0.15, rely=0.40, width=200, height=30)
 
-background = tk.Button(master, text ="background", command = helloCallBack)
+background = tk.Button(master, text ="Background", command = helloCallBack)
 background.pack()
 background.place(relx=0.15, rely=0.45, width=200, height=30)
 
