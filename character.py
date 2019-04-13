@@ -14,6 +14,9 @@ class Character():
     #Test for correct assigning of values
     def printName(self):
         print(self.name)
+    #Print stat
+    def returnStat(self, key):
+        return self.stats[key]
     #Updates Experience
     def updateExperience(self, experience):
         self.experience = experience
@@ -29,6 +32,9 @@ class Character():
     #Updates Stats
     def updateStats(self, stats):
         self.stats = stats
+    #Update stat
+    def updateStat(self, key, value):
+        self.stats[key] = value
     #Updates All
     def updateAll(self, name, class_type, race, background, alignment, experience, health, armor, stats):
         self.name = name

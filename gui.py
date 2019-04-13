@@ -31,8 +31,7 @@ def createTextInfo():
    statInfo.place(relx=0.01, rely=0.3)
 
 def createCharacter(name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
-   character_1 = character.Character(name, class_type, race, background, alignment, experience, health, armor, profficiency, stats)
-   character_1.printName()
+   return character.Character(name, class_type, race, background, alignment, experience, health, armor, profficiency, stats)
 
 master = tk.Tk()
 C = tk.Canvas(master, bg=None, height=900, width=900)
@@ -144,5 +143,10 @@ d100.pack()
 d100.place(relx=0.75, rely=0.55, width=200, height=30)
 
 createTextInfo()
-createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1})
+#Example caracter creation call
+Blarg = createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1})
+Blarg.printName()
+print(Blarg.returnStat("Str"))
+Blarg.updateStat("Str", 2)
+print(Blarg.returnStat("Str"))
 master.mainloop()
