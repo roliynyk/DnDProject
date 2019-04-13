@@ -11,9 +11,6 @@ class Character():
         self.profficiency = profficiency
         self.experience = experience
         self.stats = stats  #Dictionary of all the stats
-    #Test for correct assigning of values
-    def printName(self):
-        print(self.name)
     #Print stat
     def returnStat(self, key):
         return self.stats[key]
