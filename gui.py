@@ -1,15 +1,14 @@
 import tkinter as tk
 import random
 import character
+import NewCharacterGui as ncg
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
 
-#testing git issues
-
 def rollDice(sides):
    random.seed()
-   number = str(random.randint(0, sides))
+   number = str(random.randint(1, sides))
    #output the number wherever we need it to display
    statInfo = tk.Text(master, height=1, width=20)
    statInfo.pack()
@@ -39,7 +38,7 @@ master = tk.Tk()
 C = tk.Canvas(master, bg=None, height=900, width=900)
 
 # new character button
-new = tk.Button(master, text ="New", command = helloCallBack)
+new = tk.Button(master, text ="New", command = ncg.newCharCanvas)
 new.pack()
 new.place(relx=0.01, rely=0.01, width=50, height=30)
 
