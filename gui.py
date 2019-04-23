@@ -2,33 +2,33 @@ import tkinter as tk
 import random
 import character
 import NewCharacterGui as ncg
-from tkinter import *
+from tkinter import constants as cons
 from tkinter import messagebox
 from PIL import Image, ImageTk
 
 def rollDice(sides):
    random.seed()
    number = str(random.randint(1, sides))
-   #output the number wherever we need it to display
+   # Output the number wherever we need it to display
    statInfo = tk.Text(master, height=1, width=20)
    statInfo.pack()
-   statInfo.insert(END, number)
+   statInfo.insert(cons.END, number)
    statInfo.place(relx=0.75, rely=0.6)
 
 def helloCallBack():
    tk.messagebox.showinfo("Hello Python", "Hello World")
 
-#Create text for the character such as name and stats
+# Create text for the character such as name and stats
 def createTextInfo():
    basicCharacterInfo = tk.Text(master, height=13, width=30)
    basicCharacterInfo.pack()
-   basicCharacterInfo.insert(END, "TODO: Make calls to get name and other info")
+   basicCharacterInfo.insert(cons.END, "TODO: Make calls to get name and other info")
    basicCharacterInfo.place(relx=0.22, rely=0.06)
    C.pack()
 
    statInfo = tk.Text(master, height=6, width=10)
    statInfo.pack()
-   statInfo.insert(END, "STR\nDEX\nCON\nINT\nWIS\nCHA\n")
+   statInfo.insert(cons.END, "STR\nDEX\nCON\nINT\nWIS\nCHA\n")
    statInfo.place(relx=0.01, rely=0.3)
 
 def createCharacter(name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
@@ -37,17 +37,17 @@ def createCharacter(name, class_type, race, background, alignment, experience, h
 master = tk.Tk()
 C = tk.Canvas(master, bg=None, height=900, width=900)
 
-# new character button
+# New character button
 new = tk.Button(master, text ="New", command = ncg.newCharCanvas)
 new.pack()
 new.place(relx=0.01, rely=0.01, width=50, height=30)
 
-# load character button
+# Load character button
 load = tk.Button(master, text ="Load", command = helloCallBack)
 load.pack()
 load.place(relx=0.08, rely=0.01, width=50, height=30)
 
-# character image things
+# Character image things
 charImg = Image.open("character-image/rick.jpeg")
 charImg = charImg.resize((180,210), Image.ANTIALIAS)
 characterPic = ImageTk.PhotoImage(charImg)
@@ -55,6 +55,7 @@ panel = tk.Label(master, image = characterPic)
 panel.pack()
 panel.place(relx=0.01, rely=0.06)
 
+# Health image
 hp = Image.open("icons/hp.png")
 hp = hp.resize((35, 35))
 hpInfo = ImageTk.PhotoImage(hp)
@@ -62,6 +63,7 @@ hpp = tk.Label(master, image = hpInfo)
 hpp.pack()
 hpp.place(relx=0.52, rely=0.06)
 
+# Armor image
 armor = Image.open("icons/armor.png")
 armor = armor.resize((35, 35))
 armorInfo = ImageTk.PhotoImage(armor)
@@ -69,6 +71,7 @@ armorp = tk.Label(master,image=armorInfo)
 armorp.pack()
 armorp.place(relx=0.52, rely=0.12)
 
+# Other images
 xp = Image.open("icons/xp.png")
 xp = xp.resize((35, 35))
 xpInfo = ImageTk.PhotoImage(xp)
@@ -76,7 +79,7 @@ xp = tk.Label(master,image=xpInfo)
 xp.pack()
 xp.place(relx=0.52, rely=0.18)
 
-#character spells
+# Character spells
 spells = tk.Button(master, text ="Spells", command = helloCallBack)
 spells.pack()
 spells.place(relx=0.15, rely=0.3, width=200, height=30)
@@ -93,7 +96,7 @@ background = tk.Button(master, text ="Background", command = helloCallBack)
 background.pack()
 background.place(relx=0.15, rely=0.45, width=200, height=30)
 
-#roll types
+# Roll types
 stren = tk.Button(master, text ="Str", command = helloCallBack)
 stren.pack()
 stren.place(relx=0.5, rely=0.3, width=200, height=30)
@@ -118,7 +121,7 @@ cha = tk.Button(master, text ="Cha", command = helloCallBack)
 cha.pack()
 cha.place(relx=0.5, rely=0.55, width=200, height=30)
 
-#dice rolls
+# Dice rolls
 d4 = tk.Button(master, text ="D4", command = lambda : rollDice(4))
 d4.pack()
 d4.place(relx=0.75, rely=0.3, width=200, height=30)
