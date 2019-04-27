@@ -39,6 +39,7 @@ class Frame1(Frame):
         hp = hp.resize((35, 35))
         hpInfo = ImageTk.PhotoImage(hp)
         hpp = tk.Label(self, image = hpInfo)
+        hpp.image = hpInfo
         hpp.place(relx=0.52, rely=0.06)
 
         # Armor image
@@ -46,6 +47,7 @@ class Frame1(Frame):
         armor = armor.resize((35, 35))
         armorInfo = ImageTk.PhotoImage(armor)
         armorp = tk.Label(self, image = armorInfo)
+        armorp.image = armorInfo
         armorp.place(relx=0.52, rely=0.12)
 
         # Other images
@@ -53,6 +55,7 @@ class Frame1(Frame):
         xp = xp.resize((35, 35))
         xpInfo = ImageTk.PhotoImage(xp)
         xp = tk.Label(self, image = xpInfo)
+        xp.image = xpInfo
         xp.place(relx=0.52, rely=0.18)
 
         # Character spells
