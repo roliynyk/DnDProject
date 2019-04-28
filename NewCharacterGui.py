@@ -1,9 +1,7 @@
-import sys
 import apicalls as ap
 import LoadData
 from tkinter import *
 
-# My frame for form
 class NewCharacter(Tk):
 
     def __init__(self,parent):
@@ -18,7 +16,7 @@ class NewCharacter(Tk):
         self.infoBox(self)
         self.geometry('500x500')
         self.grid()
-
+        print(self.races)
     def infoBox(self, val):
         listBox = Listbox(self)
 
@@ -32,18 +30,30 @@ class NewCharacter(Tk):
 
     def writeRaceData(self, val):
 
+        #basic stats that don't require too much formatting
         speed = self.races[self.raceDic[val]]['speed']
+        bonuses = self.races[self.raceDic[val]]['ability_bonuses']
+
+
+        # descriptions that need better formatting
+        size = list([self.races[self.raceDic[val]]['size_description'][i:i + 80] for i in range(0, len(self.races[self.raceDic[val]]['size_description']), 80)])
         age = list([self.races[self.raceDic[val]]['age'][i:i + 80] for i in range(0, len(self.races[self.raceDic[val]]['age']), 80)])
         alignment = list([self.races[self.raceDic[val]]['alignment'][i:i + 75] for i in range(0, len(self.races[self.raceDic[val]]['alignment']), 75)])
-        info = ["Race: " + val, "Speed: " + str(speed)]
+
+        info = ["Race: " + val, "Speed: " + str(speed), "Bonuses: "+str(bonuses) ]
         age[0] = "Age: " + age[0]
         alignment[0] = "Alignment: " + alignment[0]
+        size[0] = "Size: " + size[0]
+
         info.extend(age)
+        info.extend(size)
         info.extend(alignment)
+
         return info
 
     def raceSelection(self):
-        print("FUNCTION WAS CALLED")
+
+        Label(self, text="Select Your Race").place(relx = 0.02, rely = 0.01)
         race = []
 
         for i in self.races:
@@ -55,7 +65,8 @@ class NewCharacter(Tk):
         self.dropMenu.place(relx=0.01, rely=0.05, width=110, height=30)
 
     def classSelection(self):
-        # Dropdown Menu
+
+        Label(self, text="Select Your Class").place(relx=0.02, rely=0.14)
         classSelection = []
         c_class=ap.getClassData()
 
@@ -65,14 +76,14 @@ class NewCharacter(Tk):
         self.dropVar = StringVar()
         self.dropVar.set(classSelection[0])  # default choice
         self.dropMenu1 = OptionMenu(self, self.dropVar, *classSelection, command=self.infoBox)
-        self.dropMenu1.place(relx=0.01, rely=0.15, width=110, height=30)
+        self.dropMenu1.place(relx=0.01, rely=0.18, width=110, height=30)
 
 def create_form():
     form = NewCharacter(None)
     form.title('New Character')
     form.mainloop()
 
-
+create_form()
 '''
 
 import tkinter as tk
