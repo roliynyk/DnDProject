@@ -38,7 +38,7 @@ master = tk.Tk()
 C = tk.Canvas(master, bg=None, height=900, width=900)
 
 # new character button
-new = tk.Button(master, text ="New", command = ncg.newCharCanvas)
+new = tk.Button(master, text ="New")
 new.pack()
 new.place(relx=0.01, rely=0.01, width=50, height=30)
 
