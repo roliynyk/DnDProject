@@ -18,6 +18,28 @@ class Frame1(Frame):
         self.C = Canvas(self, bg = None, width = 900, height = 900)
         self.C.pack()
 
+        #Call new character stuff here
+        self.NewCharacterStuff()
+
+        #Call Images here
+        self.Images()
+
+        #Call spells etc here
+        self.SpellsEtc()
+
+        #Call roll type buttons here
+        self.RollTypes()
+
+        #Example caracter creation call and method/variable calls
+        Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1})
+        print(Blarg.name)
+        print(Blarg.returnStat("Str"))
+        Blarg.updateStat("Str", 2)
+        print(Blarg.returnStat("Str"))
+
+        self.createTextInfo(Blarg)
+    
+    def NewCharacterStuff(self):
         # New character button
         new = tk.Button(self, text ="New", command = ncg.NewCharGui)
         new.place(relx=0.01, rely=0.01, width=50, height=30)
@@ -26,6 +48,7 @@ class Frame1(Frame):
         load = tk.Button(self, text ="Load", command = self.helloCallBack)
         load.place(relx=0.08, rely=0.01, width=50, height=30)
 
+    def Images(self):
         # Character image things
         charImg = Image.open("character-image/rick.jpeg")
         charImg = charImg.resize((180,210), Image.ANTIALIAS)
@@ -58,19 +81,7 @@ class Frame1(Frame):
         xp.image = xpInfo
         xp.place(relx=0.52, rely=0.18)
 
-        # Character spells
-        spells = tk.Button(self, text ="Spells", command = self.helloCallBack)
-        spells.place(relx=0.15, rely=0.3, width=200, height=30)
-
-        inventory = tk.Button(self, text ="Inventory", command = self.helloCallBack)
-        inventory.place(relx=0.15, rely=0.35, width=200, height=30)
-
-        skills = tk.Button(self, text ="Skills", command = self.helloCallBack)
-        skills.place(relx=0.15, rely=0.40, width=200, height=30)
-
-        background = tk.Button(self, text ="Background", command = self.helloCallBack)
-        background.place(relx=0.15, rely=0.45, width=200, height=30)
-
+    def RollTypes(self):
         # Roll types
         stren = tk.Button(self, text ="Str", command = self.helloCallBack)
         stren.place(relx=0.5, rely=0.3, width=200, height=30)
@@ -93,22 +104,28 @@ class Frame1(Frame):
         roll = tk.Button(self, text ="New Roll", command = drg.DiceRoll)
         roll.place(relx=0.75, rely=0.3, width=200, height=30)
 
-        self.createTextInfo()
-        #Example caracter creation call and method/variable calls
-        Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1})
-        print(Blarg.name)
-        print(Blarg.returnStat("Str"))
-        Blarg.updateStat("Str", 2)
-        print(Blarg.returnStat("Str"))
-    
+    def SpellsEtc(self):
+        # Character spells
+        spells = tk.Button(self, text ="Spells", command = self.helloCallBack)
+        spells.place(relx=0.15, rely=0.3, width=200, height=30)
+
+        inventory = tk.Button(self, text ="Inventory", command = self.helloCallBack)
+        inventory.place(relx=0.15, rely=0.35, width=200, height=30)
+
+        skills = tk.Button(self, text ="Skills", command = self.helloCallBack)
+        skills.place(relx=0.15, rely=0.40, width=200, height=30)
+
+        background = tk.Button(self, text ="Background", command = self.helloCallBack)
+        background.place(relx=0.15, rely=0.45, width=200, height=30)
+
     def helloCallBack(self):
         tk.messagebox.showinfo("Hello Python", "Hello World")
 
     # Create text for the character such as name and stats
-    def createTextInfo(self):
+    def createTextInfo(self, character):
         basicCharacterInfo = tk.Text(self, height=13, width=30)
         basicCharacterInfo.pack()
-        basicCharacterInfo.insert(cons.END, "TODO: Make calls to get name and other info")
+        basicCharacterInfo.insert(cons.END, "Name: " + character.name)
         basicCharacterInfo.place(relx=0.22, rely=0.06)
 
         statInfo = tk.Text(self, height=6, width=10)

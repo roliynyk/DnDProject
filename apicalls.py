@@ -35,7 +35,6 @@ def getSkillsData():
 
     return skillDictionary
 
-'''
-for i in getSkillsData():
-    print(i)
-'''
+
+# for i in getClassData():
+#     print(i)
