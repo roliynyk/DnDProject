@@ -1,17 +1,18 @@
 import sys
 import apicalls as ap
-import dataDict
+import LoadData
 from tkinter import *
 
 # My frame for form
-class simpleform_ap(Tk):
+class NewCharacter(Tk):
 
     def __init__(self,parent):
         Tk.__init__(self,parent)
         self.inputArr = []
-        self.raceDic = {'Dwarf': 1, 'Elf': 2, 'Halfling': 3, 'Human': 4, 'Dragonborn': 5,
-                        'Gnome': 6, 'Half-Elf': 7, 'Half-Orc': 8, 'Tiefling': 9}
+        self.raceDic = {'Dwarf': 0, 'Elf': 1, 'Halfling': 2, 'Human': 3, 'Dragonborn': 4, 'Gnome': 5, 'Half-Elf': 6, 'Half-Orc': 7, 'Tiefling': 8}
         self.parent = parent
+        self.races = LoadData.DataDictionary().races
+        self.classes = LoadData.DataDictionary().classes
         self.raceSelection()
         self.classSelection()
         self.infoBox(self)
@@ -22,31 +23,36 @@ class simpleform_ap(Tk):
         listBox = Listbox(self)
 
         if isinstance(val, str):
-
-            #print(dataDict.DataDictionary.races)
-            speed = ap.getRaceData()[self.raceDic[val]]['speed']
-            age = list([ap.getRaceData()[self.raceDic[val]]['age'][i:i + 60] for i in range(0, len(ap.getRaceData()[self.raceDic[val]]['age']), 60)])
-            print(age)
-            alignment = ap.getRaceData()[self.raceDic[val]]['alignment']
-            info = ["Race: "+val,"speed: "+str(speed)]
-            info.extend(age)
+            info = self.writeRaceData(val)
             for i in info:
                 listBox.insert(END, i)
 
         listBox.pack()
-        listBox.place(relx=0.01, rely=0.6, width=490, height=100)
+        listBox.place(relx=0.01, rely=0.4, width=490, height=250)
+
+    def writeRaceData(self, val):
+
+        speed = self.races[self.raceDic[val]]['speed']
+        age = list([self.races[self.raceDic[val]]['age'][i:i + 80] for i in range(0, len(self.races[self.raceDic[val]]['age']), 80)])
+        alignment = list([self.races[self.raceDic[val]]['alignment'][i:i + 75] for i in range(0, len(self.races[self.raceDic[val]]['alignment']), 75)])
+        info = ["Race: " + val, "Speed: " + str(speed)]
+        age[0] = "Age: " + age[0]
+        alignment[0] = "Alignment: " + alignment[0]
+        info.extend(age)
+        info.extend(alignment)
+        return info
 
     def raceSelection(self):
-        # Dropdown Menu
-        c_race=ap.getRaceData()
+        print("FUNCTION WAS CALLED")
         race = []
-        for i in c_race:
+
+        for i in self.races:
             race.append(i['name'])
 
         self.dropVar = StringVar()
-        self.dropVar.set(race[0]) # default choice
-        self.dropMenu1 = OptionMenu(self, self.dropVar, *race, command=self.infoBox)
-        self.dropMenu1.place(relx=0.01, rely=0.05, width=110, height=30)
+        self.dropVar.set(race[0])
+        self.dropMenu = OptionMenu(self, self.dropVar, *race, command=self.infoBox)
+        self.dropMenu.place(relx=0.01, rely=0.05, width=110, height=30)
 
     def classSelection(self):
         # Dropdown Menu
@@ -58,21 +64,13 @@ class simpleform_ap(Tk):
 
         self.dropVar = StringVar()
         self.dropVar.set(classSelection[0])  # default choice
-        self.dropMenu1 = OptionMenu(self, self.dropVar, *classSelection, command=self.func)
+        self.dropMenu1 = OptionMenu(self, self.dropVar, *classSelection, command=self.infoBox)
         self.dropMenu1.place(relx=0.01, rely=0.15, width=110, height=30)
 
-    def func(self,value):
-        print( value)
-
-
-def create_form(argv):
-    form = simpleform_ap(None)
+def create_form():
+    form = NewCharacter(None)
     form.title('New Character')
     form.mainloop()
-
-if __name__ == "__main__":
-    create_form(sys.argv)
-
 
 
 '''
