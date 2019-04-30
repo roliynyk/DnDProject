@@ -1,54 +1,54 @@
-import LoadData
+import tkinter as tk
 from tkinter import *
+import LoadData
 
 '''
-Temporary solution until we figure out how to fix Hunters stuff with mine. 
-Problems with chunk of code is that buttons don't display properly when called from main. 
+TODO: This is Ruslan's Code for New Char Gui merged with Hunters. Everything besides infoBox works properly. 
+Spent hours trying to fix infoBox in here with no luck :(
 
-To call Hunters work change ngc.create_form on line 44 in main to ngc.NewCharGui
 '''
 
-class NewCharacter(Tk):
+class NewCharGui(tk.Tk):
 
-    def __init__(self, parent):
-        Tk.__init__(self, parent)
-        self.raceDic = {'Dwarf': 0, 'Elf': 1, 'Halfling': 2, 'Human': 3, 'Dragonborn': 4, 'Gnome': 5, 'Half-Elf': 6,
-                        'Half-Orc': 7, 'Tiefling': 8}
+    def __init__(self):
+        self.newCharCanvas()
 
-        # Data referenced form api
-        self.races = LoadData.DataDictionary().races
-        self.classes = LoadData.DataDictionary().classes
-        self.alignments = LoadData.DataDictionary().alignments
+    def raceSelection(self, C):
+        race = []
+        for i in self.races:
+            race.append(i['name'])
 
-        # Class functions
-        self.raceSelection()
-        self.classSelection()
-        self.alignmentSelection()
-        self.subracesSelection()
-        self.levelSelection()
-        self.hitPoints()
-        self.characterBackground()
-        self.createCharacter()
-        self.selectAbilities()
+        tk.Label(C, text="Select Your Race").place(relx=0.02, rely=0.01)
+        self.dropVar1 = tk.StringVar(C)
+        self.dropVar1.set(race[0])
+        dropMenu = tk.OptionMenu(C, self.dropVar1, race[0], *race[1:], command = self.infoBoxPop)
+        dropMenu.pack()
+        dropMenu.place(relx=0.01, rely=0.05, width=130, height=30)
 
-        # Tk stuff
-        self.parent = parent  # no idea what this does but it breaks stuff if its not there
-        self.infoBox(self)
-        self.geometry('500x500')
-        self.grid()
-        print(self.races)
+    def classSelection(self,C):
+        classSelection = []
+        for i in self.classes:
+            classSelection.append(i['name'])
 
-    # Box that produces data output based on selection
-    def infoBox(self, val):
-        listBox = Listbox(self)
+        tk.Label(C, text="Choose a Class").place(relx=0.02, rely=0.14)
+        self.var2 = tk.StringVar(C)
+        self.var2.set(classSelection[0])
+        drop = OptionMenu(C, self.var2, classSelection[0], *classSelection[1:])
+        drop.pack()
+        drop.place(relx=0.01, rely=0.18, width=130, height=30)
 
-        if isinstance(val, str):
-            info = self.writeRaceData(val)
-            for i in info:
-                listBox.insert(END, i)
+    # creates the info box when things are selected in the gui
+    def infoBox(self, C):
+        self.listBox = Listbox(C)
+        self.listBox.pack()
+        self.listBox.place(relx=0.01, rely=0.4, width=490, height=250)
 
-        listBox.pack()
-        listBox.place(relx=0.01, rely=0.4, width=490, height=250)
+    def infoBoxPop(self, var):
+        self.listBox.delete(0, 'end')
+        if isinstance(var, str):
+           info = self.writeRaceData(var)
+           for i in info:
+               self.listBox.insert(END, i)
 
     # Populates information about the race in the GUI
     def writeRaceData(self, val):
@@ -76,84 +76,76 @@ class NewCharacter(Tk):
 
         return info
 
-    # Character Race selection menu
-    def raceSelection(self):
+    def createChar(self, C):
+        create = tk.Button(C, text ="Create Character", command = lambda : self.getSelectionInfo())
+        create.place(relx=0.7, rely=0.3, width=130, height=30)
 
-        Label(self, text="Select Your Race").place(relx=0.02, rely=0.01)
-        race = []
-
-        for i in self.races:
-            race.append(i['name'])
-
-        self.dropVar = StringVar()
-        self.dropVar.set(race[0])
-        self.dropMenu = OptionMenu(self, self.dropVar, *race, command=self.infoBox)
-        self.dropMenu.place(relx=0.01, rely=0.05, width=130, height=30)
-
-    # Character Class selection menu
-    def classSelection(self):
-
-        Label(self, text="Select Your Class").place(relx=0.02, rely=0.14)
-        classSelection = []
-
-        for i in self.classes:
-            classSelection.append(i['name'])
-
-        self.dropVar = StringVar()
-        self.dropVar.set(classSelection[0])  # default choice
-        self.dropMenu = OptionMenu(self, self.dropVar, *classSelection)
-        self.dropMenu.place(relx=0.01, rely=0.18, width=130, height=30)
-
-    # Alignment selection menu
-    def alignmentSelection(self):
-        Label(self, text="Select Your Alignment").place(relx=0.02, rely=0.26)
-        self.dropVar = StringVar()
+    def alignmentSelection(self, C):
+        tk.Label(C, text="Select Your Alignment").place(relx=0.02, rely=0.26)
+        self.dropVar = StringVar(C)
         self.dropVar.set(self.alignments[0])  # default choice
-        self.dropMenu = OptionMenu(self, self.dropVar, *self.alignments)
-        self.dropMenu.place(relx=0.01, rely=0.3, width=130, height=30)
+        dropMenu = OptionMenu(C, self.dropVar, *self.alignments)
+        dropMenu.place(relx=0.01, rely=0.3, width=130, height=30)
 
     # Subraces is populated based on race selection
-    def subracesSelection(self):
+    def subracesSelection(self, C):
         subrace = ["subraces", "get", "called", "depending", "on race"]
-        self.dropVar = StringVar()
+        self.dropVar = StringVar(C)
         self.dropVar.set(subrace[0])  # default choice
-        self.dropMenu = OptionMenu(self, self.dropVar, *subrace)
-        self.dropMenu.place(relx=0.35, rely=0.05, width=130, height=30)
+        dropMenu = OptionMenu(C, self.dropVar, *subrace)
+        dropMenu.place(relx=0.35, rely=0.05, width=130, height=30)
 
     # Specify the level of the character
-    def levelSelection(self):
+    def levelSelection(self, C):
         # Might need to make this accept xp or 1-20 value for level
-        Label(self, text="Enter Level").place(relx=0.8, rely=0.01)
-        listBox = Text(self)
+        tk.Label(C, text="Enter Level").place(relx=0.8, rely=0.01)
+        listBox = tk.Text(C)
         listBox.pack()
         listBox.place(relx=0.80, rely=0.05, width=60, height=22)
 
     # Sets the Characters HP stats
-    def hitPoints(self):
+    def hitPoints(self, C):
         # determined by hit die and some other stuff, need to research
-        hp = Button(self, text="Roll for HP")
+        hp = tk.Button(C, text="Roll for HP")
         hp.pack()
         hp.place(relx=0.7, rely=0.18, width=130, height=30)
 
-    def characterBackground(self):
-        background = Button(self, text="Background")
+    # User writes data for background of their character
+    def characterBackground(self, C):
+        background = tk.Button(C, text="Background")
         background.pack()
         background.place(relx=0.35, rely=0.3, width=130, height=30)
 
-    # Generates the Character (Do text file stuff)
-    def createCharacter(self):
-        create = Button(self, text="Create Character")
-        create.pack()
-        create.place(relx=0.7, rely=0.3, width=130, height=30)
-
     # allows selection of abilities based on class
-    def selectAbilities(self):
-        abilities = Button(self, text="Select Abilities")
+    def selectAbilities(self, C):
+        abilities = tk.Button(C, text="Select Abilities")
         abilities.pack()
         abilities.place(relx=0.35, rely=0.18, width=130, height=30)
 
+    # calls all other buttons and things in the gui
+    def newCharCanvas(self):
+        newCharacterWindow = tk.Tk()
+        newCharacterWindow.title("New Character Window")
+        C = tk.Canvas(newCharacterWindow, bg=None, height=500, width=500)
+        C.pack()
+        self.raceDic = {'Dwarf': 0, 'Elf': 1, 'Halfling': 2, 'Human': 3, 'Dragonborn': 4, 'Gnome': 5, 'Half-Elf': 6,
+                        'Half-Orc': 7, 'Tiefling': 8}
+        self.races = LoadData.DataDictionary().races
+        self.classes = LoadData.DataDictionary().classes
+        self.alignments = LoadData.DataDictionary().alignments
+        self.raceSelection(C)
+        self.classSelection(C)
+        self.createChar(C)
+        self.alignmentSelection(C)
+        self.subracesSelection(C)
+        self.levelSelection(C)
+        self.hitPoints(C)
+        self.characterBackground(C)
+        self.selectAbilities(C)
+        self.infoBox(C)
 
-def create_form():
-    form = NewCharacter(None)
-    form.title('New Character')
-    form.mainloop()
+        newCharacterWindow.mainloop()
+
+    def getSelectionInfo(self):
+        #Example on how to get new selection info, can be used to index into character info dict from api
+        print("Selections: " + self.dropVar.get() + ", " + self.var2.get())

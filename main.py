@@ -41,7 +41,7 @@ class Frame1(Frame):
     
     def NewCharacterStuff(self):
         # New character button
-        new = tk.Button(self, text ="New", command = ncg.create_form)
+        new = tk.Button(self, text ="New", command = ncg.NewCharGui)
         new.place(relx=0.01, rely=0.01, width=50, height=30)
 
         # Load character button
