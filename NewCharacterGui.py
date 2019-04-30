@@ -10,7 +10,8 @@ Spent hours trying to fix infoBox in here with no luck :(
 
 class NewCharGui(tk.Tk):
 
-    def __init__(self):
+    def __init__(self, data):
+        self.data = data
         self.newCharCanvas()
 
     def raceSelection(self, C):
@@ -130,9 +131,9 @@ class NewCharGui(tk.Tk):
         C.pack()
         self.raceDic = {'Dwarf': 0, 'Elf': 1, 'Halfling': 2, 'Human': 3, 'Dragonborn': 4, 'Gnome': 5, 'Half-Elf': 6,
                         'Half-Orc': 7, 'Tiefling': 8}
-        self.races = LoadData.DataDictionary().races
-        self.classes = LoadData.DataDictionary().classes
-        self.alignments = LoadData.DataDictionary().alignments
+        self.races = self.data.races
+        self.classes = self.data.classes
+        self.alignments = self.data.alignments
         self.raceSelection(C)
         self.classSelection(C)
         self.createChar(C)

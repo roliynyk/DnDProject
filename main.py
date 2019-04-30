@@ -7,9 +7,11 @@ from tkinter import constants as cons
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import DiceRollGui as drg
+import LoadData
 
 class Frame1(Frame):
     def __init__(self, parent):
+        self.data = LoadData.DataDictionary()
         Frame.__init__(self, parent)
         self.parent = parent
         self.widgets()
@@ -41,7 +43,7 @@ class Frame1(Frame):
     
     def NewCharacterStuff(self):
         # New character button
-        new = tk.Button(self, text ="New", command = ncg.NewCharGui)
+        new = tk.Button(self, text ="New", command = lambda : ncg.NewCharGui(self.data))
         new.place(relx=0.01, rely=0.01, width=50, height=30)
 
         # Load character button
