@@ -41,7 +41,7 @@ class Frame1(Frame):
     
     def NewCharacterStuff(self):
         # New character button
-        new = tk.Button(self, text ="New", command = ncg.NewCharGui)
+        new = tk.Button(self, text ="New", command = ncg.create_form)
         new.place(relx=0.01, rely=0.01, width=50, height=30)
 
         # Load character button
@@ -144,7 +144,7 @@ class MainWindow(Tk):
 
     def mainWidgets(self):
         self.window = Frame1(self)
-        self.window.grid(row=0, column=10, rowspan=2)
+        self.window.pack()
 
 
 if __name__ == "__main__":
