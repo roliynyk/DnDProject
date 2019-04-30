@@ -37,7 +37,7 @@ class NewCharGui(tk.Tk):
         drop.pack()
         drop.place(relx=0.01, rely=0.18, width=130, height=30)
 
-"######################################################################################################################"
+    '''##############################################################################################################'''
     # creates the info box when things are selected in the gui
     '''THIS IS THE CODE CHUNK TO FIX'''
     def infoBox(self, var):
@@ -48,7 +48,7 @@ class NewCharGui(tk.Tk):
         #         listBox.insert(END, i)
         listBox.pack()
         listBox.place(relx=0.01, rely=0.4, width=490, height=250)
-"######################################################################################################################"
+    '''##############################################################################################################'''
 
     # Populates information about the race in the GUI
     def writeRaceData(self, val):
