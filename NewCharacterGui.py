@@ -150,7 +150,6 @@ def create_form():
     form.title('New Character')
     form.mainloop()
 
-create_form()
 '''
 
 import tkinter as tk
