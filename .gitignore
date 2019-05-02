@@ -67,3 +67,6 @@ fabric.properties
 
 #include .vscode
 .vscode
+
+#include .__pycache__
+.__pycache__
