@@ -50,9 +50,16 @@ class Frame1(Frame):
         # Load character button
         load = tk.Button(self, text ="Load", command = lambda : self.Load(character))
         load.place(relx=0.08, rely=0.01, width=50, height=30)
+
+        # Print Character Info button EXAMPLE
+        print_char = tk.Button(self, text ="Print Char", command = lambda : self.PrintChar())
+        print_char.place(relx=0.16, rely=0.01, width=50, height=30)
     
     def Load(self, character):
         lcg.LoadCharGui(character)
+        
+    #Example of how to access updated character info
+    def PrintChar(self):
         self.createTextInfo(self.Blarg)
         print(self.Blarg.returnStats())
 
