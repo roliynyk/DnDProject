@@ -8,19 +8,20 @@ import json
 
 class LoadCharGui(tk.Tk):
 
-    def __init__(self):
+    def __init__(self, character):
+        self.character = character
         self.newCharCanvas()
 
     # Calls all other buttons and things in the gui
     def newCharCanvas(self):
-        newCharacterWindow = tk.Tk()
-        newCharacterWindow.title("Load Character Window")
-        C = tk.Canvas(newCharacterWindow, bg=None, height=200, width=200)
+        self.newCharacterWindow = tk.Tk()
+        self.newCharacterWindow.title("Load Character Window")
+        C = tk.Canvas(self.newCharacterWindow, bg=None, height=200, width=200)
         C.pack()
 
         self.characterSelection(C)
 
-        newCharacterWindow.mainloop()
+        self.newCharacterWindow.mainloop()
 
     def characterSelection(self, C):
         tk.Label(C, text="Select Character to Load").place(relx=0.2, rely=0.05)
@@ -49,5 +50,7 @@ class LoadCharGui(tk.Tk):
         #open file here and read in data
         with open(os.getcwd() + '/Character_Data/' + filename) as file:
             char_json = json.load(file)
-            print(char_json)
+        self.character.updateStats(char_json)
+        self.newCharacterWindow.destroy()
+        #Load back into main here
         

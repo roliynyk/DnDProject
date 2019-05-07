@@ -14,6 +14,9 @@ class Character():
     #Print stat
     def returnStat(self, key):
         return self.stats[key]
+    #Print all stats
+    def returnStats(self):
+        return self.stats
     #Updates Experience
     def updateExperience(self, experience):
         self.experience = experience

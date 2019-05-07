@@ -21,8 +21,15 @@ class Frame1(Frame):
         self.C = Canvas(self, bg = None, width = 900, height = 900)
         self.C.pack()
 
+        #Example caracter creation call and method/variable calls
+        self.Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1})
+        print(self.Blarg.name)
+        print(self.Blarg.returnStat("Str"))
+        self.Blarg.updateStat("Str", 2)
+        print(self.Blarg.returnStat("Str"))
+
         #Call new character stuff here
-        self.NewCharacterStuff()
+        self.NewCharacterStuff(self.Blarg)
 
         #Call Images here
         self.Images()
@@ -33,23 +40,21 @@ class Frame1(Frame):
         #Call roll type buttons here
         self.RollTypes()
 
-        #Example caracter creation call and method/variable calls
-        Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1})
-        print(Blarg.name)
-        print(Blarg.returnStat("Str"))
-        Blarg.updateStat("Str", 2)
-        print(Blarg.returnStat("Str"))
-
-        self.createTextInfo(Blarg)
+        self.createTextInfo(self.Blarg)
     
-    def NewCharacterStuff(self):
+    def NewCharacterStuff(self, character):
         # New character button
         new = tk.Button(self, text ="New", command = lambda : ncg.NewCharGui(self.data))
         new.place(relx=0.01, rely=0.01, width=50, height=30)
 
         # Load character button
-        load = tk.Button(self, text ="Load", command = lambda : lcg.LoadCharGui())
+        load = tk.Button(self, text ="Load", command = lambda : self.Load(character))
         load.place(relx=0.08, rely=0.01, width=50, height=30)
+    
+    def Load(self, character):
+        lcg.LoadCharGui(character)
+        self.createTextInfo(self.Blarg)
+        print(self.Blarg.returnStats())
 
     def Images(self):
         # Character image things
@@ -128,7 +133,8 @@ class Frame1(Frame):
     def createTextInfo(self, character):
         basicCharacterInfo = tk.Text(self, height=13, width=30)
         basicCharacterInfo.pack()
-        basicCharacterInfo.insert(cons.END, "Name: " + character.name)
+        basicCharacterInfo.insert(cons.END, "Name: " + character.name + "\n")
+        basicCharacterInfo.insert(cons.END, "Stats: " + str(character.returnStats()) + "\n")
         basicCharacterInfo.place(relx=0.22, rely=0.06)
 
         statInfo = tk.Text(self, height=6, width=10)
@@ -148,7 +154,6 @@ class MainWindow(Tk):
     def mainWidgets(self):
         self.window = Frame1(self)
         self.window.pack()
-
 
 if __name__ == "__main__":
     app = MainWindow(None)
