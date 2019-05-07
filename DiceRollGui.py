@@ -29,18 +29,21 @@ class DiceRoll(tk.Tk):
         d20 = tk.Button(C, text ="D20", command = lambda : self.rollDice(20, C))
         d20.place(relx=.1, rely=0.5, width=200, height=30)
 
-        d100 = tk.Button(C, text ="D100", command = lambda : self.rollDice(100, C))
+        d100 = tk.Button(C, text ="D100", command = lambda : self.rollDice(100, C, True))
         d100.place(relx=.1, rely=0.6, width=200, height=30)
 
-    def rollDice(self, sides, C):
+    def rollDice(self, sides, C, hundred=False):
         random.seed()
-        number = str(random.randint(1, sides))
+        if hundred:
+            number = str(random.choice([10,20,30,40,50,60,70,80,90,100]))
+        else:
+            number = str(random.randint(1, sides))
         # Output the number wherever we need it to display
         statInfo = tk.Text(C, height=1, width=20)
         statInfo.pack()
         statInfo.insert(cons.END, number)
         statInfo.place(relx=.1, rely=0.7)
-
+    
     def newDiceCanvas(self):
         newDiceWindow = tk.Tk()
         newDiceWindow.title("Dice")

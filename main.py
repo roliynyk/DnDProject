@@ -2,6 +2,7 @@ import tkinter as tk
 import random
 import character
 import NewCharacterGui as ncg
+import LoadCharacterGui as lcg
 from tkinter import *
 from tkinter import constants as cons
 from tkinter import messagebox
@@ -47,7 +48,7 @@ class Frame1(Frame):
         new.place(relx=0.01, rely=0.01, width=50, height=30)
 
         # Load character button
-        load = tk.Button(self, text ="Load", command = self.helloCallBack)
+        load = tk.Button(self, text ="Load", command = lambda : lcg.LoadCharGui())
         load.place(relx=0.08, rely=0.01, width=50, height=30)
 
     def Images(self):
