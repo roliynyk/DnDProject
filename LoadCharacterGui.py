@@ -4,6 +4,7 @@ import LoadData
 import os, os.path
 from os import listdir
 from os.path import isfile, join
+import json
 
 class LoadCharGui(tk.Tk):
 
@@ -28,25 +29,25 @@ class LoadCharGui(tk.Tk):
         #Get path to the character saves
         path = os.getcwd() + '/Character_Data'
         onlyfiles = [f for f in listdir(path)]
-        self.dropVar1.set(onlyfiles[0])
+        self.dropVar1.set('Select a File')
         #Set option menu
         dropMenu = tk.OptionMenu(C, self.dropVar1, onlyfiles[0], *onlyfiles[1:], command = self.SetVal)
         dropMenu.pack()
         dropMenu.place(relx=0.2, rely=0.2, width=130, height=30)
         #Set load button and function
-        load = tk.Button(C, text ="Load", command = lambda : self.GetCharData)
+        load = tk.Button(C, text ="Load", command = lambda : self.GetCharData(self.filename))
         load.pack()
         load.place(relx=0.2, rely=0.4, width=130, height=30)
 
-    # def SetVal(self, val):
-    #     val_int = val
-    #     assert isinstance(val_int, str)
-
-    #     #open file
-
-    #     print(val_int)
+    def SetVal(self, val):
+        self.filename = val
+        assert isinstance(self.filename, str)
+        #print(self.filename)
 
     #Method to get character data and return it to main
-    def GetCharData(self):
+    def GetCharData(self, filename):
         #open file here and read in data
-        print("Hello World")
+        with open(os.getcwd() + '/Character_Data/' + filename) as file:
+            char_json = json.load(file)
+            print(char_json)
+        
