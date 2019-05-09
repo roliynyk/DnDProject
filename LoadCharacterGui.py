@@ -48,8 +48,8 @@ class LoadCharGui(tk.Tk):
     #Method to get character data and return it to main
     def GetCharData(self, filename):
         #open file here and read in data
-        with open(os.getcwd() + '/Character_Data/' + filename) as file:
-            char_json = json.load(file)
+        with open(os.getcwd() + '/Character_Data/' + filename) as f:
+            char_json = json.load(f)
         self.character.updateStats(char_json)
         self.newCharacterWindow.destroy()
         #Load back into main here

@@ -17,6 +17,20 @@ class Character():
     #Print all stats
     def returnStats(self):
         return self.stats
+    #Returns all stats in a dictionary for the purpose of more easily storing data in json
+    def returnAll(self):
+        stat_dict = {}
+        stat_dict.update({"name": self.name})
+        stat_dict.update({"class_type": self.class_type})
+        stat_dict.update({"race": self.race})
+        stat_dict.update({"background": self.background})
+        stat_dict.update({"alignment": self.alignment})
+        stat_dict.update({"experience": self.experience})
+        stat_dict.update({"health": self.health})
+        stat_dict.update({"armor": self.armor})
+        stat_dict.update({"profficiency": self.profficiency})
+        stat_dict.update({"stats": self.stats})
+        return stat_dict
     #Updates Experience
     def updateExperience(self, experience):
         self.experience = experience

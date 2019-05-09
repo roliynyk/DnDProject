@@ -9,6 +9,10 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import DiceRollGui as drg
 import LoadData
+import pprint
+import os
+from os import listdir
+import json
 
 class Frame1(Frame):
     def __init__(self, parent):
@@ -22,7 +26,7 @@ class Frame1(Frame):
         self.C.pack()
 
         #Example caracter creation call and method/variable calls
-        self.Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1})
+        self.Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1, "Dex":1, "Con":1, "Int":1, "Wis":1, "Cha":1})
         print(self.Blarg.name)
         print(self.Blarg.returnStat("Str"))
         self.Blarg.updateStat("Str", 2)
@@ -54,14 +58,31 @@ class Frame1(Frame):
         # Print Character Info button EXAMPLE
         print_char = tk.Button(self, text ="Print Char", command = lambda : self.PrintChar())
         print_char.place(relx=0.16, rely=0.01, width=50, height=30)
+
+        save_char = tk.Button(self, text ="Save", command = lambda : self.SaveChar(self.Blarg))
+        save_char.place(relx=0.24, rely=0.01, width=50, height=30)
     
     def Load(self, character):
         lcg.LoadCharGui(character)
         
     #Example of how to access updated character info
+    #Mostly used for debugging
     def PrintChar(self):
         self.createTextInfo(self.Blarg)
-        print(self.Blarg.returnStats())
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(self.Blarg.returnAll())
+
+    def SaveChar(self, character):
+        #Open new .txt file and save character data in json
+        #Can add functionality to name files after the character name and update if the save already exists
+        counter = 1
+        path = os.getcwd() + '/Character_Data'
+        onlyfiles = [f for f in listdir(path)]
+        for f in onlyfiles:
+            counter += 1
+        filename = "character_" + str(counter) + ".json"
+        with open(os.getcwd() + '\\Character_Data\\' + filename, "w+") as f:
+            json.dump(character.returnAll(), f)
 
     def Images(self):
         # Character image things
@@ -133,6 +154,7 @@ class Frame1(Frame):
         background = tk.Button(self, text ="Background", command = self.helloCallBack)
         background.place(relx=0.15, rely=0.45, width=200, height=30)
 
+    #Function for debugging button presses etc...
     def helloCallBack(self):
         tk.messagebox.showinfo("Hello Python", "Hello World")
 
