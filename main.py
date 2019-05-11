@@ -32,7 +32,7 @@ class Frame1(Frame):
         #Call roll type buttons here
         self.RollTypes()
 
-        #Example caracter creation call and method/variable calls
+        #Example character creation call and method/variable calls
         Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1})
         print(Blarg.name)
         print(Blarg.returnStat("Str"))
