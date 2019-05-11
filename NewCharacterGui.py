@@ -15,11 +15,11 @@ class NewCharGui(tk.Tk):
             race.append(i['name'])
 
         tk.Label(C, text="Select Your Race").place(relx=0.02, rely=0.01)
-        self.raceDropdown = tk.StringVar(C)
-        self.raceDropdown.set(race[0])
-        dropMenu = tk.OptionMenu(C, self.raceDropdown, race[0], *race[1:], command = self.infoBoxPop)
-        dropMenu.pack()
-        dropMenu.place(relx=0.01, rely=0.03, width=130, height=30)
+        self.raceVar = tk.StringVar(C)
+        self.raceVar.set(race[0])
+        raceMenu = tk.OptionMenu(C, self.raceVar, race[0], *race[1:], command = self.infoBoxPop)
+        raceMenu.pack()
+        raceMenu.place(relx=0.01, rely=0.03, width=130, height=30)
 
     # Class selection drop down button
     def classSelection(self, C):
@@ -81,7 +81,7 @@ class NewCharGui(tk.Tk):
 
     def subraceSelection(self, C):
         subrace = []
-        for i in self.races[self.raceDic[self.raceDropdown.get()]]['subraces']:
+        for i in self.races[self.raceDic[self.raceVar.get()]]['subraces']:
             subrace.append(i['name'])
 
         self.subraceVar = StringVar(C)
@@ -89,6 +89,20 @@ class NewCharGui(tk.Tk):
 
         self.subraceDropMenu = OptionMenu(C, self.subraceVar, *subrace)
         self.subraceDropMenu.place(relx=0.2, rely=0.03, width=130, height=30)
+
+    def proficincySelection(self, C):
+        proficiencies = []
+
+        print(self.classes[self.classDic[self.classVar.get()]])
+        for i in self.classes[self.classDic[self.classVar.get()]]['proficiency_choices'][0]['from']:
+            proficiencies.append(i['name'].strip('Skill: '))
+
+        self.proficVar = StringVar(C)
+        self.proficVar.set(proficiencies[0])  # default choice
+
+        self.proficDropMenu = OptionMenu(C, self.proficVar, *proficiencies)
+        self.proficDropMenu.place(relx=0.2, rely=0.1, width=130, height=30)
+
 
     # creates the info box when things are selected in the gui
     def infoBox(self, C):
@@ -105,9 +119,21 @@ class NewCharGui(tk.Tk):
                 info = self.writeRaceData(var)
 
             elif var in self.classDic:
+                self.updateProficincies(var)
                 info = self.writeClassData(var)
             for i in info:
                 self.listBox.insert(END, i)
+
+    def updateProficincies(self, var):
+
+        proficDicList = self.classes[self.classDic[var]]['proficiency_choices'][0]['from']
+
+        self.proficVar.set(proficDicList[0]['name'].strip("Skill: "))
+
+        self.proficDropMenu['menu'].delete(0, 'end')
+        for i in proficDicList:
+            self.proficDropMenu['menu'].add_command(label=i['name'].strip("Skill: "), command=tk._setit(self.proficVar, i['name'].strip("Skill: ")))
+
 
     #updates the subrace dropdown
     def updateSubraces(self, var):
@@ -121,6 +147,7 @@ class NewCharGui(tk.Tk):
         for i in subraceDicList:
             self.subraceDropMenu['menu'].add_command(label=i['name'], command=tk._setit(self.subraceVar, i['name']))
 
+
     # Populates the info box with selected Class Data
     def writeClassData(self, val):
 
@@ -130,8 +157,8 @@ class NewCharGui(tk.Tk):
         startingEquipment = ''
         classLevels =''
         proficiencyChoices = 0
-        for i in self.classes[self.classDic[val]]['proficiency_choices']:
-            print(i)
+        #for i in self.classes[self.classDic[val]]['proficiency_choices']:
+         #   print(i)
             #proficiencyChoice += i
 
         for i in self.classes[self.classDic[val]]['saving_throws']:
@@ -195,13 +222,13 @@ class NewCharGui(tk.Tk):
         self.selectAbilities(C)
         self.infoBox(C)
         self.subraceSelection(C)
-
+        self.proficincySelection(C)
         newCharacterWindow.mainloop()
 
     def getSelectionInfo(self):
 
         # Example on how to get new selection info, can be used to index into character info dict from api
-        print("Selections: " + self.raceSelection.get())
+        print("Selections: " + self.raceVar.get())
         print("Class: " + self.classVar.get())
         print("Alignment: "+self.alignmentVar.get())
         print("level: "+self.levelText.get('1.0',END))
