@@ -42,7 +42,7 @@ class Frame1(Frame):
         self.SpellsEtc()
 
         #Call roll type buttons here
-        self.RollTypes(self.Blarg)
+        self.RollTypes(self.Blarg, self.C)
 
         self.createTextInfo(self.Blarg)
 
@@ -126,7 +126,7 @@ class Frame1(Frame):
         xp.image = xpInfo
         xp.place(relx=0.52, rely=0.18)
 
-    def RollTypes(self,toon):
+    def RollTypes(self, toon, C):
         # Roll types
         stren = tk.Button(self, text ="Str", command = lambda: self.rollDicewithStat(toon,"Str",20))
         stren.place(relx=0.5, rely=0.3, width=200, height=30)
@@ -146,8 +146,39 @@ class Frame1(Frame):
         cha = tk.Button(self, text ="Cha", command = lambda: self.rollDicewithStat(toon,"Cha",20))
         cha.place(relx=0.5, rely=0.55, width=200, height=30)
 
-        roll = tk.Button(self, text ="New Roll", command = drg.DiceRoll)
-        roll.place(relx=0.75, rely=0.3, width=200, height=30)
+        #roll = tk.Button(self, text ="New Roll", command = drg.DiceRoll)
+        #roll.place(relx=0.75, rely=0.3, width=200, height=30)
+
+        # Dice rolls
+        d4 = tk.Button(C, text ="D4", command = lambda : self.rollDice(4, C))
+        d4.place(relx=.75, rely=0.3, width=200, height=30)
+
+        d6 = tk.Button(C, text ="D6", command = lambda : self.rollDice(6, C))
+        d6.place(relx=.75, rely=0.35, width=200, height=30)
+
+        d8 = tk.Button(C, text ="D8", command = lambda : self.rollDice(8, C))
+        d8.place(relx=.75, rely=0.4, width=200, height=30)
+
+        d10 = tk.Button(C, text ="D10", command = lambda : self.rollDice(10, C))
+        d10.place(relx=.75, rely=0.45, width=200, height=30)
+
+        d20 = tk.Button(C, text ="D20", command = lambda : self.rollDice(20, C))
+        d20.place(relx=.75, rely=0.5, width=200, height=30)
+
+        d100 = tk.Button(C, text ="D100", command = lambda : self.rollDice(100, C, True))
+        d100.place(relx=.75, rely=0.55, width=200, height=30)
+
+    def rollDice(self, sides, C, hundred=False):
+        random.seed()
+        if hundred:
+            number = str(random.choice([10,20,30,40,50,60,70,80,90,100]))
+        else:
+            number = str(random.randint(1, sides))
+        # Output the number wherever we need it to display
+        statInfo = tk.Text(C, height=1, width=20)
+        statInfo.pack()
+        statInfo.insert(cons.END, "Dice: D" + str(sides) + "\nRole: " + str(number))
+        statInfo.place(relx=.75, rely=0.6, width=200, height=40)
 
     def SpellsEtc(self):
         # Character spells
