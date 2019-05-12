@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+import random
 import LoadData
 
 class NewCharGui(tk.Tk):
@@ -35,10 +36,10 @@ class NewCharGui(tk.Tk):
         classMenu.place(relx=0.01, rely=0.1, width=130, height=30)
 
     def charName(self, C):
-        tk.Label(C, text="Character Name").place(relx=0.6, rely=0.1)
+        tk.Label(C, text="Character Name").place(relx=0.8, rely=0.01)
         self.characterName = tk.Text(C)
         self.characterName.pack()
-        self.characterName.place(relx=0.80, rely=0.15, width=60, height=22)
+        self.characterName.place(relx=0.80, rely=0.04, width=120, height=22)
 
     def createChar(self, C):
         create = tk.Button(C, text ="Create Character", command = lambda: self.getSelectionInfo())
@@ -54,17 +55,87 @@ class NewCharGui(tk.Tk):
     # Specify the level of the character
     def levelSelection(self, C):
         # Might need to make this accept xp or 1-20 value for level
-        tk.Label(C, text="Enter Level").place(relx=0.8, rely=0.01)
+        tk.Label(C, text="Enter Level").place(relx=0.8, rely=0.08)
         self.levelText = tk.Text(C)
         self.levelText.pack()
-        self.levelText.place(relx=0.80, rely=0.05, width=60, height=22)
+        self.levelText.place(relx=0.80, rely=0.1, width=60, height=22)
 
     # Sets the Characters HP stats
     def hitPoints(self, C):
         # determined by hit die and some other stuff, need to research
-        hp = tk.Button(C, text="Roll for HP")
+        hp = tk.Button(C, text="Roll for HP", command = self.diceRollHp)
         hp.pack()
         hp.place(relx=0.7, rely=0.18, width=130, height=30)
+
+    def strengthMod(self, C):
+        tk.Label(C, text="STR").place(relx=0.45, rely=0.06)
+        self.str = tk.Text(C)
+        self.str.pack()
+        self.str.place(relx=0.45, rely=0.081, width=60, height=22)
+
+    def dexterityMod(self, C):
+        tk.Label(C, text="DEX").place(relx=0.45, rely=0.108)
+        self.dex = tk.Text(C)
+        self.dex.pack()
+        self.dex.place(relx=0.45, rely=0.1285, width=60, height=22)
+
+    def constitutionMod(self, C):
+        tk.Label(C, text="CON").place(relx=0.45, rely=0.15)
+        self.con = tk.Text(C)
+        self.con.pack()
+        self.con.place(relx=0.45, rely=0.175, width=60, height=22)
+
+    def intelligenceMod(self, C):
+        tk.Label(C, text="INT").place(relx=0.55, rely=0.108)
+        self.int = tk.Text(C)
+        self.int.pack()
+        self.int.place(relx=0.55, rely=0.1285, width=60, height=22)
+
+    def wisdomMod(self, C):
+        tk.Label(C, text="WIS").place(relx=0.55, rely=0.06)
+        self.wis = tk.Text(C)
+        self.wis.pack()
+        self.wis.place(relx=0.55, rely=0.081, width=60, height=22)
+
+    def charismaMod(self, C):
+        tk.Label(C, text="CHA").place(relx=0.55, rely=0.155)
+        self.cha = tk.Text(C)
+        self.cha.pack()
+        self.cha.place(relx=0.55, rely=0.175, width=60, height=22)
+
+    def rollStatMod(self, C):
+        tk.Label(C, text="Roll for stats, type the\n result into the modifiers").place(relx=0.45, rely=0.018)
+        hp = tk.Button(C, text="Roll for Stats", command = self.diceRollStats)
+        hp.pack()
+        hp.place(relx=0.45, rely=0.21, width=130, height=30)
+
+    def diceRollStats(self):
+        rollList = []
+
+        for i in range(4):
+            rollList.append(random.randint(1, 6))
+        rollList.sort(reverse=True)
+        del rollList[3]
+        total = sum(rollList)
+        self.infoBoxPop(total)
+
+    def diceRollHp(self):
+        try:
+            level = int(self.levelText.get('1.0', END).strip())
+            hitDie = int(self.hitDice)
+            hp = 0
+            for i in range(1, level+1):
+                print(i)
+                if i == 1:
+                    hp += hitDie
+                else:
+                    hp += random.randint(1, hitDie)
+
+            self.hp_str = "Your Health is: " + str(hp)
+            self.infoBoxPop(self.hp_str)
+
+        except ValueError:
+            self.infoBoxPop("Enter level and select a character class to roll Hp")
 
     # User writes data for background of their character
     def characterBackground(self, C):
@@ -77,7 +148,7 @@ class NewCharGui(tk.Tk):
     def selectAbilities(self, C):
         abilities = tk.Button(C, text="Select Abilities")
         abilities.pack()
-        abilities.place(relx=0.35, rely=0.18, width=130, height=30)
+        abilities.place(relx=0.2, rely=0.17, width=130, height=30)
 
     def subraceSelection(self, C):
         subrace = []
@@ -90,6 +161,7 @@ class NewCharGui(tk.Tk):
         self.subraceDropMenu = OptionMenu(C, self.subraceVar, *subrace)
         self.subraceDropMenu.place(relx=0.2, rely=0.03, width=130, height=30)
 
+    # Need to make an additional button to add multiple proficiencies, currently only adds one.
     def proficincySelection(self, C):
         proficiencies = []
 
@@ -103,26 +175,36 @@ class NewCharGui(tk.Tk):
         self.proficDropMenu = OptionMenu(C, self.proficVar, *proficiencies)
         self.proficDropMenu.place(relx=0.2, rely=0.1, width=130, height=30)
 
-
     # creates the info box when things are selected in the gui
     def infoBox(self, C):
         self.listBox = Listbox(C)
         self.listBox.pack()
-        self.listBox.place(relx=0.01, rely=0.4, width=490, height=250)
+        self.listBox.place(relx=0.01, rely=0.6, width=490, height=250)
 
     def infoBoxPop(self, var):
-
+        #print(var)
         self.listBox.delete(0, 'end')
+
         if isinstance(var, str):
-            if var in self.raceDic:
+            if "Your Health is:" in var:
+                self.listBox.insert(END, var)
+
+            elif "Enter level" in var:
+                self.listBox.insert(END, var)
+
+            elif var in self.raceDic:
                 self.updateSubraces(var)
                 info = self.writeRaceData(var)
+                [self.listBox.insert(END, i) for i in info]
 
             elif var in self.classDic:
                 self.updateProficincies(var)
                 info = self.writeClassData(var)
-            for i in info:
-                self.listBox.insert(END, i)
+                [self.listBox.insert(END, i) for i in info]
+
+        elif isinstance(var, int):
+            self.listBox.insert(END, "Type in " + str(var)+ " for one of the modifiers.")
+
 
     def updateProficincies(self, var):
 
@@ -133,7 +215,6 @@ class NewCharGui(tk.Tk):
         self.proficDropMenu['menu'].delete(0, 'end')
         for i in proficDicList:
             self.proficDropMenu['menu'].add_command(label=i['name'].strip("Skill: "), command=tk._setit(self.proficVar, i['name'].strip("Skill: ")))
-
 
     #updates the subrace dropdown
     def updateSubraces(self, var):
@@ -147,11 +228,10 @@ class NewCharGui(tk.Tk):
         for i in subraceDicList:
             self.subraceDropMenu['menu'].add_command(label=i['name'], command=tk._setit(self.subraceVar, i['name']))
 
-
     # Populates the info box with selected Class Data
     def writeClassData(self, val):
 
-        hitDice = str(self.classes[self.classDic[val]]['hit_die'])
+        self.hitDice = str(self.classes[self.classDic[val]]['hit_die'])
         proficiencyChoice = "Proficiency Choices: "
         savingThrows = "Saving Throws: "
         startingEquipment = ''
@@ -167,7 +247,7 @@ class NewCharGui(tk.Tk):
             else:
                 savingThrows += i['name']
 
-        classInfo = ["Class: " + val, "Hit Die: D" + hitDice,
+        classInfo = ["Class: " + val, "Hit Die: D" + self.hitDice,
                      savingThrows,
                      proficiencyChoice]
 
@@ -220,6 +300,13 @@ class NewCharGui(tk.Tk):
         self.hitPoints(C)
         self.characterBackground(C)
         self.selectAbilities(C)
+        self.constitutionMod(C)
+        self.dexterityMod(C)
+        self.strengthMod(C)
+        self.wisdomMod(C)
+        self.intelligenceMod(C)
+        self.charismaMod(C)
+        self.rollStatMod(C)
         self.infoBox(C)
         self.subraceSelection(C)
         self.proficincySelection(C)

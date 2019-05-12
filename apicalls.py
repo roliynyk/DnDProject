@@ -35,6 +35,23 @@ def getSkillsData():
 
     return skillDictionary
 
+def getSpellData():
 
+    spellsDictionary = []
+
+    for i in range(1, 19):
+        spells = requests.get(url + 'spells/'.format(i)).json()
+        spellsDictionary.append(spells)
+
+    return spellsDictionary
+
+def getEquipmentData():
+    equipmentDictionary = []
+
+    for i in range(1, 19):
+        equipment = requests.get(url + 'equipment/'.format(i)).json()
+        equipmentDictionary.append(equipment)
+
+    return equipmentDictionary
 # for i in getClassData():
 #     print(i)
