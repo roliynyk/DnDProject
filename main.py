@@ -36,7 +36,7 @@ class Frame1(Frame):
         self.NewCharacterStuff(self.Blarg)
 
         #Call Images here
-        self.Images()
+        self.Images(self.Blarg)
 
         #Call spells etc here
         self.SpellsEtc()
@@ -93,7 +93,12 @@ class Frame1(Frame):
             parsed = json.loads(json.dumps(character.returnAll()))
             json.dump(parsed, f, indent=4)
 
-    def Images(self):
+        saveSuccess = tk.Text(self, height=1, width=20)
+        saveSuccess.pack()
+        saveSuccess.insert(cons.END, "Save Successful")
+        saveSuccess.place(relx=.75, rely=0.65, width=200, height=40)
+
+    def Images(self, character):
         # Character image things
         charImg = Image.open("character-image/rick.jpeg")
         charImg = charImg.resize((180,210), Image.ANTIALIAS)
@@ -110,6 +115,14 @@ class Frame1(Frame):
         hpp.image = hpInfo
         hpp.place(relx=0.52, rely=0.06)
 
+        #Health input box (current/total)
+        tk.Label(self, text="Enter Health").place(relx=0.6, rely=0.04)
+        tk.Label(self, text="/" + str(character.health)).place(relx=0.67, rely=0.07)
+        listBoxH = tk.Entry(self)
+        listBoxH.insert(END, str(character.health))
+        listBoxH.pack()
+        listBoxH.place(relx=0.6, rely=0.07, width=60, height=22)
+
         # Armor image
         armor = Image.open("icons/armor.png")
         armor = armor.resize((35, 35))
@@ -118,13 +131,31 @@ class Frame1(Frame):
         armorp.image = armorInfo
         armorp.place(relx=0.52, rely=0.12)
 
-        # Other images
+        #Armor input box (current/total)
+        tk.Label(self, text="Enter Armor").place(relx=0.6, rely=0.1)
+        tk.Label(self, text="/" + str(character.armor)).place(relx=0.67, rely=0.13)
+        listBoxA = tk.Entry(self)
+        listBoxA.insert(END, str(character.armor))
+        listBoxA.pack()
+        listBoxA.place(relx=0.6, rely=0.13, width=60, height=22)
+
+        # XP images
         xp = Image.open("icons/xp.png")
         xp = xp.resize((35, 35))
         xpInfo = ImageTk.PhotoImage(xp)
         xp = tk.Label(self, image = xpInfo)
         xp.image = xpInfo
         xp.place(relx=0.52, rely=0.18)
+
+        #XP input box
+        tk.Label(self, text="Enter XP").place(relx=0.6, rely=0.16)
+        listBoxX = tk.Entry(self)
+        listBoxX.insert(END, str(character.experience))
+        listBoxX.pack()
+        listBoxX.place(relx=0.6, rely=0.19, width=60, height=22)
+
+        update = tk.Button(self, text="Update", command = lambda: character.updateHealthEtc(int(listBoxH.get()), int(listBoxA.get()), int(listBoxX.get())))
+        update.place(relx=0.72, rely=0.125, width=200, height=30)
 
     def RollTypes(self, toon, C):
         # Roll types

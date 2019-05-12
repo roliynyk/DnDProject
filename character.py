@@ -49,6 +49,11 @@ class Character():
     #Update stat
     def updateStat(self, key, value):
         self.stats[key] = value
+    #Updates health armor and experience
+    def updateHealthEtc(self, health, armor, experience):
+        self.health = health
+        self.armor = armor
+        self.experience = experience
     #Updates All
     def updateAll(self, name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
         self.name = name
