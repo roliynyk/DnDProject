@@ -13,6 +13,7 @@ import pprint
 import os
 from os import listdir
 import json
+from functools import wraps
 
 class Frame1(Frame):
     def __init__(self, parent):
@@ -42,6 +43,18 @@ class Frame1(Frame):
 
         self.createTextInfo(self.Blarg)
 
+
+    def call_count(function, count=[0]):
+
+
+        @wraps(function)
+        def increase_count(*args, **kwargs):
+            count[0] += 1
+            return function(*args, **kwargs), count[0]
+
+        return increase_count
+
+    @call_count
     def rollDicewithStat(self, toon, stat, sides):
         random.seed()
         number = random.randint(1, sides)
@@ -163,22 +176,22 @@ class Frame1(Frame):
 
     def RollTypes(self, toon, C):
         # Roll types
-        stren = tk.Button(self, text ="Str", command = lambda: self.rollDicewithStat(toon,"Str",20))
+        stren = tk.Button(self, text ="Str", command = lambda: print(self.rollDicewithStat(toon,"Str",20)))
         stren.place(relx=0.5, rely=0.3, width=200, height=30)
 
-        dex = tk.Button(self, text ="Dex", command = lambda: self.rollDicewithStat(toon,"Dex",20))
+        dex = tk.Button(self, text ="Dex", command = lambda: print(self.rollDicewithStat(toon,"Dex",20)))
         dex.place(relx=0.5, rely=0.35, width=200, height=30)
 
-        con = tk.Button(self, text ="Con", command = lambda: self.rollDicewithStat(toon,"Con",20))
+        con = tk.Button(self, text ="Con", command = lambda: print(self.rollDicewithStat(toon,"Con",20)))
         con.place(relx=0.5, rely=0.4, width=200, height=30)
 
-        intel = tk.Button(self, text ="Int", command = lambda: self.rollDicewithStat(toon,"Int",20))
+        intel = tk.Button(self, text ="Int", command = lambda: print(self.rollDicewithStat(toon,"Int",20)))
         intel.place(relx=0.5, rely=0.45, width=200, height=30)
 
-        wis = tk.Button(self, text ="Wis", command = lambda: self.rollDicewithStat(toon,"Wis",20))
+        wis = tk.Button(self, text ="Wis", command = lambda: print(self.rollDicewithStat(toon,"Wis",20)))
         wis.place(relx=0.5, rely=0.5, width=200, height=30)
 
-        cha = tk.Button(self, text ="Cha", command = lambda: self.rollDicewithStat(toon,"Cha",20))
+        cha = tk.Button(self, text ="Cha", command = lambda: print(self.rollDicewithStat(toon,"Cha",20)))
         cha.place(relx=0.5, rely=0.55, width=200, height=30)
 
         #roll = tk.Button(self, text ="New Roll", command = drg.DiceRoll)
