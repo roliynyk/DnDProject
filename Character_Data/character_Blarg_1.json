@@ -1,0 +1,19 @@
+{
+    "name": "Blarg",
+    "class_type": "Brawler",
+    "race": "Elf",
+    "background": "Parents died",
+    "alignment": "Self",
+    "experience": 0,
+    "health": 20,
+    "armor": 15,
+    "profficiency": 0,
+    "stats": {
+        "Str": 2,
+        "Dex": 1,
+        "Con": 1,
+        "Int": 1,
+        "Wis": 1,
+        "Cha": 1
+    }
+}
