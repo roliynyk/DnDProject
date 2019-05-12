@@ -50,7 +50,7 @@ class Character():
     def updateStat(self, key, value):
         self.stats[key] = value
     #Updates All
-    def updateAll(self, name, class_type, race, background, alignment, experience, health, armor, stats):
+    def updateAll(self, name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
         self.name = name
         self.class_type = class_type
         self.race = race
@@ -58,5 +58,6 @@ class Character():
         self.alignment = alignment
         self.health = health
         self.armor = armor
+        self.profficiency = profficiency
         self.experience = experience
         self.stats = stats  #Dictionary of all the stats
