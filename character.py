@@ -11,9 +11,10 @@ class Character():
         self.profficiency = profficiency
         self.experience = experience
         self.stats = stats  #Dictionary of all the stats
+
     #Print stat
     def returnStat(self, key):
-        return self.stats[key]
+        return "5" #self.stats[key] #TODO get real stats
     #Updates Experience
     def updateExperience(self, experience):
         self.experience = experience

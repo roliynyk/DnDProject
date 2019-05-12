@@ -29,8 +29,7 @@ class Frame1(Frame):
         #Call spells etc here
         self.SpellsEtc()
 
-        #Call roll type buttons here
-        self.RollTypes()
+
 
         #Example caracter creation call and method/variable calls
         Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1})
@@ -39,7 +38,18 @@ class Frame1(Frame):
         Blarg.updateStat("Str", 2)
         print(Blarg.returnStat("Str"))
 
+        # Call roll type buttons here
+        self.RollTypes(Blarg)
         self.createTextInfo(Blarg)
+
+
+    def rollDicewithStat(self, toon, stat, sides):
+        random.seed()
+        number = str(random.randint(1, sides))
+        number = number + toon.returnStat(stat)
+        tk.messagebox.showinfo("Stat Check", str(number))
+
+
     
     def NewCharacterStuff(self):
         # New character button
@@ -83,24 +93,24 @@ class Frame1(Frame):
         xp.image = xpInfo
         xp.place(relx=0.52, rely=0.18)
 
-    def RollTypes(self):
+    def RollTypes(self,toon):
         # Roll types
-        stren = tk.Button(self, text ="Str", command = self.helloCallBack)
+        stren = tk.Button(self, text ="Str", command = lambda: self.rollDicewithStat(toon,"STR",20))
         stren.place(relx=0.5, rely=0.3, width=200, height=30)
 
-        dex = tk.Button(self, text ="Dex", command = self.helloCallBack)
+        dex = tk.Button(self, text ="Dex", command = lambda: self.rollDicewithStat(toon,"DEX",20))
         dex.place(relx=0.5, rely=0.35, width=200, height=30)
 
-        con = tk.Button(self, text ="Con", command = self.helloCallBack)
+        con = tk.Button(self, text ="Con", command = lambda: self.rollDicewithStat(toon,"CON",20))
         con.place(relx=0.5, rely=0.4, width=200, height=30)
 
-        intel = tk.Button(self, text ="Int", command = self.helloCallBack)
+        intel = tk.Button(self, text ="Int", command = lambda: self.rollDicewithStat(toon,"INT",20))
         intel.place(relx=0.5, rely=0.45, width=200, height=30)
 
-        wis = tk.Button(self, text ="Wis", command = self.helloCallBack)
+        wis = tk.Button(self, text ="Wis", command = lambda: self.rollDicewithStat(toon,"WIS",20))
         wis.place(relx=0.5, rely=0.5, width=200, height=30)
 
-        cha = tk.Button(self, text ="Cha", command = self.helloCallBack)
+        cha = tk.Button(self, text ="Cha", command = lambda: self.rollDicewithStat(toon,"CHA",20))
         cha.place(relx=0.5, rely=0.55, width=200, height=30)
 
         roll = tk.Button(self, text ="New Roll", command = drg.DiceRoll)
@@ -137,6 +147,8 @@ class Frame1(Frame):
 
     def createCharacter(self,name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
         return character.Character(name, class_type, race, background, alignment, experience, health, armor, profficiency, stats)
+
+
 
 class MainWindow(Tk):
     def __init__(self, parent):

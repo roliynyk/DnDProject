@@ -41,6 +41,9 @@ class DiceRoll(tk.Tk):
         statInfo.insert(cons.END, number)
         statInfo.place(relx=.1, rely=0.7)
 
+
+
+
     def newDiceCanvas(self):
         newDiceWindow = tk.Tk()
         newDiceWindow.title("Dice")
