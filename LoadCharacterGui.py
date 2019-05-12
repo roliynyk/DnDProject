@@ -10,18 +10,18 @@ class LoadCharGui(tk.Tk):
 
     def __init__(self, character):
         self.character = character
-        self.newCharCanvas()
+        self.loadCharCanvas()
 
     # Calls all other buttons and things in the gui
-    def newCharCanvas(self):
-        self.newCharacterWindow = tk.Tk()
-        self.newCharacterWindow.title("Load Character Window")
-        C = tk.Canvas(self.newCharacterWindow, bg=None, height=200, width=200)
+    def loadCharCanvas(self):
+        self.loadCharacterWindow = tk.Tk()
+        self.loadCharacterWindow.title("Load Character Window")
+        C = tk.Canvas(self.loadCharacterWindow, bg=None, height=200, width=200)
         C.pack()
 
         self.characterSelection(C)
 
-        self.newCharacterWindow.mainloop()
+        self.loadCharacterWindow.mainloop()
 
     def characterSelection(self, C):
         tk.Label(C, text="Select Character to Load").place(relx=0.2, rely=0.05)
@@ -52,7 +52,7 @@ class LoadCharGui(tk.Tk):
             char_json = json.load(f)
         self.character.updateAll(char_json['name'], char_json['class_type'], char_json['race'], char_json['background'], 
             char_json['alignment'], char_json['experience'], char_json['health'], char_json['armor'], char_json['profficiency'], char_json['stats'])
-        self.newCharacterWindow.destroy()
+        self.loadCharacterWindow.destroy()
         #Load back into main here
 
 #character update function: def updateAll(self, name, class_type, race, background, alignment, experience, health, armor, stats):
