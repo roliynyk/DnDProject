@@ -59,7 +59,7 @@ class Frame1(Frame):
         print_char = tk.Button(self, text ="Print Char", command = lambda : self.PrintChar())
         print_char.place(relx=0.16, rely=0.01, width=50, height=30)
 
-        save_char = tk.Button(self, text ="Save", command = lambda : self.SaveChar(self.Blarg))
+        save_char = tk.Button(self, text ="Save", command = lambda : self.SaveChar(character))
         save_char.place(relx=0.24, rely=0.01, width=50, height=30)
     
     def Load(self, character):
@@ -79,10 +79,13 @@ class Frame1(Frame):
         path = os.getcwd() + '/Character_Data'
         onlyfiles = [f for f in listdir(path)]
         for f in onlyfiles:
-            counter += 1
-        filename = "character_" + str(counter) + ".json"
+            if character.name in f:
+                counter += 1
+        filename = "character_" + character.name + "_" + str(counter) + ".json"
         with open(os.getcwd() + '\\Character_Data\\' + filename, "w+") as f:
-            json.dump(character.returnAll(), f)
+            #parsed, indent=4, sort_keys=True
+            parsed = json.loads(json.dumps(character.returnAll()))
+            json.dump(parsed, f, indent=4)
 
     def Images(self):
         # Character image things
