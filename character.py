@@ -11,9 +11,11 @@ class Character():
         self.profficiency = profficiency
         self.experience = experience
         self.stats = stats  #Dictionary of all the stats
+
     #Print stat
     def returnStat(self, key):
         return self.stats[key]
+
     #Print all stats
     def returnStats(self):
         return self.stats
@@ -31,29 +33,37 @@ class Character():
         stat_dict.update({"profficiency": self.profficiency})
         stat_dict.update({"stats": self.stats})
         return stat_dict
+
     #Updates Experience
     def updateExperience(self, experience):
         self.experience = experience
+
     #Updates Helth
     def updateHealth(self, health):
         self.health = health
+
     #Updates Armor
     def updateArmor(self, armor):
         self.armor = armor
+
     #Updates Profficiency
     def updateProfficiency(self, profficiency):
         self.profficiency = profficiency
+
     #Updates Stats
     def updateStats(self, stats):
         self.stats = stats
+
     #Update stat
     def updateStat(self, key, value):
         self.stats[key] = value
+
     #Updates health armor and experience
     def updateHealthEtc(self, health, armor, experience):
         self.health = health
         self.armor = armor
         self.experience = experience
+
     #Updates All
     def updateAll(self, name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
         self.name = name

@@ -43,7 +43,6 @@ class Frame1(Frame):
 
         self.createTextInfo(self.Blarg)
 
-
     def call_count(function, count=[0]):
 
 
