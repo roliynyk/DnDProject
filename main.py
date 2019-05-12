@@ -27,10 +27,6 @@ class Frame1(Frame):
 
         #Example caracter creation call and method/variable calls
         self.Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1, "Dex":1, "Con":1, "Int":1, "Wis":1, "Cha":1})
-        print(self.Blarg.name)
-        print(self.Blarg.returnStat("Str"))
-        self.Blarg.updateStat("Str", 2)
-        print(self.Blarg.returnStat("Str"))
 
         #Call new character stuff here
         self.NewCharacterStuff(self.Blarg)
@@ -61,22 +57,30 @@ class Frame1(Frame):
         load = tk.Button(self, text ="Load", command = lambda : self.Load(character))
         load.place(relx=0.08, rely=0.01, width=50, height=30)
 
-        # Print Character Info button EXAMPLE
-        print_char = tk.Button(self, text ="Print Char", command = lambda : self.PrintChar())
-        print_char.place(relx=0.16, rely=0.01, width=50, height=30)
-
+        # Save character
         save_char = tk.Button(self, text ="Save", command = lambda : self.SaveChar(character))
-        save_char.place(relx=0.24, rely=0.01, width=50, height=30)
+        save_char.place(relx=0.16, rely=0.01, width=50, height=30)
+
+        # Print Character Info button EXAMPLE
+        print_char = tk.Button(self, text ="Update Character", command = lambda : self.UpdateChar(character))
+        print_char.place(relx=0.3, rely=0.01, width=100, height=30)
     
     def Load(self, character):
         lcg.LoadCharGui(character)
         
     #Example of how to access updated character info
     #Mostly used for debugging
-    def PrintChar(self):
+    def UpdateChar(self, character):
+        #Delete old values
+        self.listBoxH.delete(0, 'end')
+        self.listBoxA.delete(0, 'end')
+        self.listBoxX.delete(0, 'end')
+        #Insert new values
+        self.listBoxH.insert(END, str(character.health))
+        self.listBoxA.insert(END, str(character.armor))
+        self.listBoxX.insert(END, str(character.experience))
+        #Update other gui elements
         self.createTextInfo(self.Blarg)
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(self.Blarg.returnAll())
 
     def SaveChar(self, character):
         #Open new .txt file and save character data in json
@@ -118,10 +122,10 @@ class Frame1(Frame):
         #Health input box (current/total)
         tk.Label(self, text="Enter Health").place(relx=0.6, rely=0.04)
         tk.Label(self, text="/" + str(character.health)).place(relx=0.67, rely=0.07)
-        listBoxH = tk.Entry(self)
-        listBoxH.insert(END, str(character.health))
-        listBoxH.pack()
-        listBoxH.place(relx=0.6, rely=0.07, width=60, height=22)
+        self.listBoxH = tk.Entry(self)
+        self.listBoxH.insert(END, str(character.health))
+        self.listBoxH.pack()
+        self.listBoxH.place(relx=0.6, rely=0.07, width=60, height=22)
 
         # Armor image
         armor = Image.open("icons/armor.png")
@@ -134,10 +138,10 @@ class Frame1(Frame):
         #Armor input box (current/total)
         tk.Label(self, text="Enter Armor").place(relx=0.6, rely=0.1)
         tk.Label(self, text="/" + str(character.armor)).place(relx=0.67, rely=0.13)
-        listBoxA = tk.Entry(self)
-        listBoxA.insert(END, str(character.armor))
-        listBoxA.pack()
-        listBoxA.place(relx=0.6, rely=0.13, width=60, height=22)
+        self.listBoxA = tk.Entry(self)
+        self.listBoxA.insert(END, str(character.armor))
+        self.listBoxA.pack()
+        self.listBoxA.place(relx=0.6, rely=0.13, width=60, height=22)
 
         # XP images
         xp = Image.open("icons/xp.png")
@@ -149,12 +153,12 @@ class Frame1(Frame):
 
         #XP input box
         tk.Label(self, text="Enter XP").place(relx=0.6, rely=0.16)
-        listBoxX = tk.Entry(self)
-        listBoxX.insert(END, str(character.experience))
-        listBoxX.pack()
-        listBoxX.place(relx=0.6, rely=0.19, width=60, height=22)
+        self.listBoxX = tk.Entry(self)
+        self.listBoxX.insert(END, str(character.experience))
+        self.listBoxX.pack()
+        self.listBoxX.place(relx=0.6, rely=0.19, width=60, height=22)
 
-        update = tk.Button(self, text="Update", command = lambda: character.updateHealthEtc(int(listBoxH.get()), int(listBoxA.get()), int(listBoxX.get())))
+        update = tk.Button(self, text="Update", command = lambda: character.updateHealthEtc(int(self.listBoxH.get()), int(self.listBoxA.get()), int(self.listBoxX.get())))
         update.place(relx=0.72, rely=0.125, width=200, height=30)
 
     def RollTypes(self, toon, C):
@@ -234,12 +238,14 @@ class Frame1(Frame):
         basicCharacterInfo = tk.Text(self, height=13, width=30)
         basicCharacterInfo.pack()
         basicCharacterInfo.insert(cons.END, "Name: " + character.name + "\n")
-        basicCharacterInfo.insert(cons.END, "Stats: " + str(character.returnStats()) + "\n")
+        #basicCharacterInfo.insert(cons.END, "Stats: " + str(character.returnStats()) + "\n")
         basicCharacterInfo.place(relx=0.22, rely=0.06)
 
+        stats_dict = character.returnStats()
         statInfo = tk.Text(self, height=6, width=10)
         statInfo.pack()
-        statInfo.insert(cons.END, "STR\nDEX\nCON\nINT\nWIS\nCHA\n")
+        statInfo.insert(cons.END, "STR: " + str(stats_dict["Str"]) + "\nDEX: " + str(stats_dict["Dex"]) + "\nCON: " + str(stats_dict["Con"]) + 
+            "\nINT: " + str(stats_dict["Int"]) + "\nWIS: " + str(stats_dict["Wis"]) + "\nCHA: " + str(stats_dict["Cha"]))
         statInfo.place(relx=0.01, rely=0.3)
 
     def createCharacter(self,name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
