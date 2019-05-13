@@ -1,0 +1,19 @@
+{
+    "name": "jasdfkjh\n",
+    "class_type": "Barbarian",
+    "race": "Dwarf",
+    "background": "fghjdfgh\n",
+    "alignment": "Lawful Good",
+    "experience": 10,
+    "health": 70,
+    "armor": 6,
+    "profficiency": "Athletics",
+    "stats": {
+        "Str": 10,
+        "Dex": 10,
+        "Con": 10,
+        "Int": 10,
+        "Wis": 10,
+        "Cha": 10
+    }
+}

@@ -180,6 +180,8 @@ class NewCharGui(tk.Tk):
 
         except ValueError:
             self.infoBoxPop("Enter level and select a character class to roll Hp")
+        except RecursionError:
+            self.infoBoxPop("Enter level and select a character class to roll Hp")
 
     # User writes data for background of their character
     def characterBackground(self, C):
@@ -360,9 +362,17 @@ class NewCharGui(tk.Tk):
         print("Class: " + self.classVar.get())
         print("Alignment: " + self.alignmentVar.get())
         print("Level: " + self.levelText.get('1.0',END))
-
-        self.character.updateAll(self.characterName.get('1.0',END), self.classVar.get(), self.raceVar.get(), self.background.get('1.0',END), 
-            self.alignmentVar.get(), int(self.levelText.get('1.0',END)), self.total_health, 6, self.proficVar.get(), 
-            {"Str":int(self.str.get('1.0',END)), "Dex":int(self.dex.get('1.0',END)), "Con":int(self.con.get('1.0',END)), 
-            "Int":int(self.int.get('1.0',END)), "Wis":int(self.wis.get('1.0',END)), "Cha":int(self.cha.get('1.0',END))})
-        self.newCharacterWindow.destroy()
+        try:
+            self.character.updateAll(self.characterName.get('1.0',END),
+                                     self.classVar.get(), self.raceVar.get(),
+                                     self.background.get('1.0',END),
+                                     self.alignmentVar.get(),
+                                     int(self.levelText.get('1.0',END)),
+                                     self.total_health,
+                                     6,
+                                     self.proficVar.get(),
+                                    {"Str":int(self.str.get('1.0',END)), "Dex":int(self.dex.get('1.0',END)), "Con":int(self.con.get('1.0',END)),
+                                    "Int":int(self.int.get('1.0',END)), "Wis":int(self.wis.get('1.0',END)), "Cha":int(self.cha.get('1.0',END))})
+            self.newCharacterWindow.destroy()
+        except RecursionError:
+            self.infoBoxPop("Enter level and select a character class to roll Hp")
