@@ -15,7 +15,5 @@ class DataDictionary():
 #         for i in var:
 #             print(i["name"])
 
-
-print(DataDictionary().spellsDict)
 # data = DataDictionary()
 # data.retNames(data.classes)
