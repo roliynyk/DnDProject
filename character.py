@@ -1,5 +1,7 @@
 class Character():
     #Init character class
+    #Add any new stats here in the same format as the others and add them to the updateAll() function as well
+    #Then anywhere that that function is called will have to be updated to include the new values
     def __init__(self, name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
         self.name = name
         self.class_type = class_type

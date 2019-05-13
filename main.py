@@ -55,7 +55,6 @@ class Frame1(Frame):
         def increase_count(*args, **kwargs):
             count[0] += 1
             return function(*args, **kwargs), count[0]
-
         return increase_count
 
     @call_count
@@ -70,7 +69,7 @@ class Frame1(Frame):
 
     def NewCharacterStuff(self, character):
         # New character button
-        new = tk.Button(self, text ="New", command = lambda : ncg.NewCharGui(self.data))
+        new = tk.Button(self, text ="New", command = lambda : ncg.NewCharGui(self.data, character))
         new.place(relx=0.01, rely=0.01, width=50, height=30)
 
         # Load character button
@@ -111,7 +110,7 @@ class Frame1(Frame):
         for f in onlyfiles:
             if character.name in f:
                 counter += 1
-        filename = "character_" + character.name + "_" + str(counter) + ".json"
+        filename = "character_" + character.name.strip() + "_" + str(counter) + ".json"
         with open(os.getcwd() + '\\Character_Data\\' + filename, "w+") as f:
             #parsed, indent=4, sort_keys=True
             parsed = json.loads(json.dumps(character.returnAll()))

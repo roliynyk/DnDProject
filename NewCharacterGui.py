@@ -1,12 +1,13 @@
 import tkinter as tk
 from tkinter import *
-from PIL import ImageTk, Image
+from tkinter import OptionMenu
 import random
 
 class NewCharGui(tk.Tk):
 
-    def __init__(self, data):
+    def __init__(self, data, character):
         self.data = data
+        self.character = character
         self.newCharCanvas()
 
     #Race selection drop down
@@ -173,7 +174,7 @@ class NewCharGui(tk.Tk):
                     hp += hitDie
                 else:
                     hp += random.randint(1, hitDie)
-
+            self.total_health = hp
             self.hp_str = "Your Health is: " + str(hp)
             self.infoBoxPop(self.hp_str)
 
@@ -316,9 +317,9 @@ class NewCharGui(tk.Tk):
 
     # calls all other buttons and things in the gui
     def newCharCanvas(self):
-        newCharacterWindow = tk.Tk()
-        newCharacterWindow.title("New Character Window")
-        C = tk.Canvas(newCharacterWindow, bg=None, height=800, width=800)
+        self.newCharacterWindow = tk.Tk()
+        self.newCharacterWindow.title("New Character Window")
+        C = tk.Canvas(self.newCharacterWindow, bg=None, height=800, width=800)
         C.pack()
 
         self.raceDic = self.data.raceNameDict
@@ -350,12 +351,18 @@ class NewCharGui(tk.Tk):
         self.proficincySelection(C)
         self.spellSelection(C)
         self.equipmentSelection(C)
-        newCharacterWindow.mainloop()
+        self.newCharacterWindow.mainloop()
 
     def getSelectionInfo(self):
 
         # Example on how to get new selection info, can be used to index into character info dict from api
         print("Selections: " + self.raceVar.get())
         print("Class: " + self.classVar.get())
-        print("Alignment: "+self.alignmentVar.get())
-        print("level: " + self.levelText.get('1.0', END))
+        print("Alignment: " + self.alignmentVar.get())
+        print("Level: " + self.levelText.get('1.0',END))
+
+        self.character.updateAll(self.characterName.get('1.0',END), self.classVar.get(), self.raceVar.get(), self.background.get('1.0',END), 
+            self.alignmentVar.get(), int(self.levelText.get('1.0',END)), self.total_health, 6, self.proficVar.get(), 
+            {"Str":int(self.str.get('1.0',END)), "Dex":int(self.dex.get('1.0',END)), "Con":int(self.con.get('1.0',END)), 
+            "Int":int(self.int.get('1.0',END)), "Wis":int(self.wis.get('1.0',END)), "Cha":int(self.cha.get('1.0',END))})
+        self.newCharacterWindow.destroy()
