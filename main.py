@@ -7,9 +7,7 @@ from tkinter import *
 from tkinter import constants as cons
 from tkinter import messagebox
 from PIL import Image, ImageTk
-import DiceRollGui as drg
 import LoadData
-import pprint
 import os
 from os import listdir
 import json
@@ -23,7 +21,16 @@ class Frame1(Frame):
         self.widgets()
 
     def widgets(self):
+
         self.C = Canvas(self, bg = None, width = 900, height = 900)
+
+        #background
+        img = Image.open("icons/background.jpg")
+        background = ImageTk.PhotoImage(img)
+        bg = tk.Label(self, image=background)
+        bg.image = background
+        bg.place(relx=0.0, rely=0.0)
+
         self.C.pack()
 
         #Example caracter creation call and method/variable calls
@@ -44,8 +51,6 @@ class Frame1(Frame):
         self.createTextInfo(self.Blarg)
 
     def call_count(function, count=[0]):
-
-
         @wraps(function)
         def increase_count(*args, **kwargs):
             count[0] += 1
@@ -58,7 +63,10 @@ class Frame1(Frame):
         random.seed()
         number = random.randint(1, sides)
         number = number + toon.returnStat(stat)
-        tk.messagebox.showinfo("Stat Check", str(number))
+        statInfo = tk.Text(self, height=1, width=20)
+        statInfo.pack()
+        statInfo.insert(cons.END, "Dice: D" + str(sides) + "\nRoll: " + str(number))
+        statInfo.place(relx=0.5, rely=0.6, width=200, height=40)
 
     def NewCharacterStuff(self, character):
         # New character button
@@ -114,6 +122,7 @@ class Frame1(Frame):
         saveSuccess.insert(cons.END, "Save Successful")
         saveSuccess.place(relx=.75, rely=0.65, width=200, height=40)
 
+    #Images need to be added transparency somehow, there's a way but it's hard to find
     def Images(self, character):
         # Character image things
         charImg = Image.open("character-image/rick.jpeg")
@@ -132,7 +141,6 @@ class Frame1(Frame):
         hpp.place(relx=0.52, rely=0.06)
 
         #Health input box (current/total)
-        tk.Label(self, text="Enter Health").place(relx=0.6, rely=0.04)
         tk.Label(self, text="/" + str(character.health)).place(relx=0.67, rely=0.07)
         self.listBoxH = tk.Entry(self)
         self.listBoxH.insert(END, str(character.health))
@@ -148,7 +156,6 @@ class Frame1(Frame):
         armorp.place(relx=0.52, rely=0.12)
 
         #Armor input box (current/total)
-        tk.Label(self, text="Enter Armor").place(relx=0.6, rely=0.1)
         tk.Label(self, text="/" + str(character.armor)).place(relx=0.67, rely=0.13)
         self.listBoxA = tk.Entry(self)
         self.listBoxA.insert(END, str(character.armor))
@@ -164,14 +171,13 @@ class Frame1(Frame):
         xp.place(relx=0.52, rely=0.18)
 
         #XP input box
-        tk.Label(self, text="Enter XP").place(relx=0.6, rely=0.16)
         self.listBoxX = tk.Entry(self)
         self.listBoxX.insert(END, str(character.experience))
         self.listBoxX.pack()
         self.listBoxX.place(relx=0.6, rely=0.19, width=60, height=22)
 
         update = tk.Button(self, text="Update", command = lambda: character.updateHealthEtc(int(self.listBoxH.get()), int(self.listBoxA.get()), int(self.listBoxX.get())))
-        update.place(relx=0.72, rely=0.125, width=200, height=30)
+        update.place(relx=0.85, rely=0.025, width=100, height=30)
 
     def RollTypes(self, toon, C):
         # Roll types
@@ -197,22 +203,22 @@ class Frame1(Frame):
         #roll.place(relx=0.75, rely=0.3, width=200, height=30)
 
         # Dice rolls
-        d4 = tk.Button(C, text ="D4", command = lambda : self.rollDice(4, C))
+        d4 = tk.Button(self, text ="D4", command = lambda : self.rollDice(4, self))
         d4.place(relx=.75, rely=0.3, width=200, height=30)
 
-        d6 = tk.Button(C, text ="D6", command = lambda : self.rollDice(6, C))
+        d6 = tk.Button(self, text ="D6", command = lambda : self.rollDice(6, self))
         d6.place(relx=.75, rely=0.35, width=200, height=30)
 
-        d8 = tk.Button(C, text ="D8", command = lambda : self.rollDice(8, C))
+        d8 = tk.Button(self, text ="D8", command = lambda : self.rollDice(8, self))
         d8.place(relx=.75, rely=0.4, width=200, height=30)
 
-        d10 = tk.Button(C, text ="D10", command = lambda : self.rollDice(10, C))
+        d10 = tk.Button(self, text ="D10", command = lambda : self.rollDice(10, self))
         d10.place(relx=.75, rely=0.45, width=200, height=30)
 
-        d20 = tk.Button(C, text ="D20", command = lambda : self.rollDice(20, C))
+        d20 = tk.Button(self, text ="D20", command = lambda : self.rollDice(20, self))
         d20.place(relx=.75, rely=0.5, width=200, height=30)
 
-        d100 = tk.Button(C, text ="D100", command = lambda : self.rollDice(100, C, True))
+        d100 = tk.Button(self, text ="D100", command = lambda : self.rollDice(100, self, True))
         d100.place(relx=.75, rely=0.55, width=200, height=30)
 
     def rollDice(self, sides, C, hundred=False):
@@ -224,7 +230,7 @@ class Frame1(Frame):
         # Output the number wherever we need it to display
         statInfo = tk.Text(C, height=1, width=20)
         statInfo.pack()
-        statInfo.insert(cons.END, "Dice: D" + str(sides) + "\nRole: " + str(number))
+        statInfo.insert(cons.END, "Dice: D" + str(sides) + "\nRoll: " + str(number))
         statInfo.place(relx=.75, rely=0.6, width=200, height=40)
 
     def SpellsEtc(self):
@@ -275,4 +281,5 @@ class MainWindow(Tk):
 
 if __name__ == "__main__":
     app = MainWindow(None)
+    app.title("D&D Character Sheet")
     app.mainloop()

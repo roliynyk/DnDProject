@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import *
+from PIL import ImageTk, Image
 import random
-import LoadData
 
 class NewCharGui(tk.Tk):
 
@@ -36,14 +36,14 @@ class NewCharGui(tk.Tk):
         classMenu.place(relx=0.01, rely=0.1, width=130, height=30)
 
     def charName(self, C):
-        tk.Label(C, text="Character Name").place(relx=0.8, rely=0.01)
+        tk.Label(C, text="Character Name").place(relx=0.72, rely=0.03)
         self.characterName = tk.Text(C)
         self.characterName.pack()
-        self.characterName.place(relx=0.80, rely=0.04, width=120, height=22)
+        self.characterName.place(relx=0.72, rely=0.06, width=120, height=22)
 
     def createChar(self, C):
         create = tk.Button(C, text ="Create Character", command = lambda: self.getSelectionInfo())
-        create.place(relx=0.7, rely=0.3, width=130, height=30)
+        create.place(relx=0.68, rely=0.22, width=150, height=45)
 
     def alignmentSelection(self, C):
         tk.Label(C, text="Select Your Alignment").place(relx=0.015, rely=0.15)
@@ -55,17 +55,60 @@ class NewCharGui(tk.Tk):
     # Specify the level of the character
     def levelSelection(self, C):
         # Might need to make this accept xp or 1-20 value for level
-        tk.Label(C, text="Enter Level").place(relx=0.8, rely=0.08)
+        tk.Label(C, text="Enter Level").place(relx=0.75, rely=0.09)
         self.levelText = tk.Text(C)
         self.levelText.pack()
-        self.levelText.place(relx=0.80, rely=0.1, width=60, height=22)
+        self.levelText.place(relx=0.75, rely=0.11, width=60, height=22)
+
+    def spellSelection(self, C):
+        spells = []
+        count = 0
+
+        #taking top 20 results for spells since OptionMenu is not scrollable
+        for i in self.spells[0]['results']:
+            if count == 20:
+                break
+            else:
+                spells.append(i['name'])
+            count += 1
+
+        tk.Label(C, text="Select Spells").place(relx=0.2, rely=0.15)
+        self.spellsVar = tk.StringVar(C)
+        self.spellsVar.set(spells[0])
+
+        #Unable to make OptionMenu scrollable, need an alternative function
+        spellsMenu = tk.OptionMenu(C, self.spellsVar, spells[0], *spells[1:], command=self.infoBoxPop)
+        spellsMenu.pack()
+        spellsMenu.place(relx=0.2, rely=0.17, width=130, height=30)
+
+    def equipmentSelection(self, C):
+        equipment = []
+        count = 0
+
+        #taking top 20 results for equipment since OptionMenu is not scrollable
+        for i in self.equipment[0]['results']:
+            if count == 20:
+                break
+            else:
+                equipment.append(i['name'])
+            count += 1
+        print(equipment)
+
+        tk.Label(C, text="Select Equipment").place(relx=0.2, rely=0.22)
+        self.equipVar = tk.StringVar(C)
+        self.equipVar.set(equipment[0])
+
+        # Unable to make OptionMenu scrollable, need an alternative function
+        equipMenu = tk.OptionMenu(C, self.equipVar, equipment[0], *equipment[1:], command=self.infoBoxPop)
+        equipMenu.pack()
+        equipMenu.place(relx=0.2, rely=0.24, width=130, height=30)
 
     # Sets the Characters HP stats
     def hitPoints(self, C):
         # determined by hit die and some other stuff, need to research
         hp = tk.Button(C, text="Roll for HP", command = self.diceRollHp)
         hp.pack()
-        hp.place(relx=0.7, rely=0.18, width=130, height=30)
+        hp.place(relx=0.7, rely=0.15, width=130, height=30)
 
     def strengthMod(self, C):
         tk.Label(C, text="STR").place(relx=0.45, rely=0.06)
@@ -139,10 +182,10 @@ class NewCharGui(tk.Tk):
 
     # User writes data for background of their character
     def characterBackground(self, C):
-        tk.Label(C, text="Character's Background").place(relx=0.01, rely=0.22)
+        tk.Label(C, text="Character's Background").place(relx=0.01, rely=0.28)
         self.background = tk.Text(C)
         self.background.pack()
-        self.background.place(relx=0.01, rely=0.24, width=200, height=200)
+        self.background.place(relx=0.01, rely=0.308, width=790, height=180)
 
     # allows selection of abilities based on class
     def selectAbilities(self, C):
@@ -156,7 +199,7 @@ class NewCharGui(tk.Tk):
             subrace.append(i['name'])
 
         self.subraceVar = StringVar(C)
-        self.subraceVar.set(subrace[0])  # default choice
+        self.subraceVar.set(subrace[0])
 
         self.subraceDropMenu = OptionMenu(C, self.subraceVar, *subrace)
         self.subraceDropMenu.place(relx=0.2, rely=0.03, width=130, height=30)
@@ -170,7 +213,7 @@ class NewCharGui(tk.Tk):
             proficiencies.append(i['name'].strip('Skill: '))
 
         self.proficVar = StringVar(C)
-        self.proficVar.set(proficiencies[0])  # default choice
+        self.proficVar.set(proficiencies[0])
 
         self.proficDropMenu = OptionMenu(C, self.proficVar, *proficiencies)
         self.proficDropMenu.place(relx=0.2, rely=0.1, width=130, height=30)
@@ -179,12 +222,12 @@ class NewCharGui(tk.Tk):
     def infoBox(self, C):
         self.listBox = Listbox(C)
         self.listBox.pack()
-        self.listBox.place(relx=0.01, rely=0.6, width=490, height=250)
+        self.listBox.place(relx=0.01, rely=0.62, width=790, height=250)
 
+    # populates the info box with data
     def infoBoxPop(self, var):
-        #print(var)
-        self.listBox.delete(0, 'end')
 
+        self.listBox.delete(0, 'end')
         if isinstance(var, str):
             if "Your Health is:" in var:
                 self.listBox.insert(END, var)
@@ -205,7 +248,7 @@ class NewCharGui(tk.Tk):
         elif isinstance(var, int):
             self.listBox.insert(END, "Type in " + str(var)+ " for one of the modifiers.")
 
-
+    # creates a dropdown for proficiencies
     def updateProficincies(self, var):
 
         proficDicList = self.classes[self.classDic[var]]['proficiency_choices'][0]['from']
@@ -232,14 +275,7 @@ class NewCharGui(tk.Tk):
     def writeClassData(self, val):
 
         self.hitDice = str(self.classes[self.classDic[val]]['hit_die'])
-        proficiencyChoice = "Proficiency Choices: "
         savingThrows = "Saving Throws: "
-        startingEquipment = ''
-        classLevels =''
-        proficiencyChoices = 0
-        #for i in self.classes[self.classDic[val]]['proficiency_choices']:
-         #   print(i)
-            #proficiencyChoice += i
 
         for i in self.classes[self.classDic[val]]['saving_throws']:
             if i != self.classes[self.classDic[val]]['saving_throws'][-1]:
@@ -248,8 +284,7 @@ class NewCharGui(tk.Tk):
                 savingThrows += i['name']
 
         classInfo = ["Class: " + val, "Hit Die: D" + self.hitDice,
-                     savingThrows,
-                     proficiencyChoice]
+                     savingThrows]
 
         return classInfo
 
@@ -259,13 +294,14 @@ class NewCharGui(tk.Tk):
         # basic stats that don't require too much formatting
         speed = self.races[self.raceDic[val]]['speed']
         bonuses = self.races[self.raceDic[val]]['ability_bonuses']
+
         # descriptions that need better formatting, currently using list comprehension
-        size = list([self.races[self.raceDic[val]]['size_description'][i:i + 80] for i in
-                     range(0, len(self.races[self.raceDic[val]]['size_description']), 80)])
-        age = list([self.races[self.raceDic[val]]['age'][i:i + 80] for i in
-                    range(0, len(self.races[self.raceDic[val]]['age']), 80)])
-        alignment = list([self.races[self.raceDic[val]]['alignment'][i:i + 75] for i in
-                          range(0, len(self.races[self.raceDic[val]]['alignment']), 75)])
+        size = list([self.races[self.raceDic[val]]['size_description'][i:i + 120] for i in
+                     range(0, len(self.races[self.raceDic[val]]['size_description']), 120)])
+        age = list([self.races[self.raceDic[val]]['age'][i:i + 120] for i in
+                    range(0, len(self.races[self.raceDic[val]]['age']), 120)])
+        alignment = list([self.races[self.raceDic[val]]['alignment'][i:i + 120] for i in
+                          range(0, len(self.races[self.raceDic[val]]['alignment']), 120)])
 
         info = ["Race: " + val, "Speed: " + str(speed), "Bonuses: " + str(bonuses)]
         age[0] = "Age: " + age[0]
@@ -290,6 +326,8 @@ class NewCharGui(tk.Tk):
         self.races = self.data.races
         self.classes = self.data.classes
         self.alignments = self.data.alignments
+        self.spells = self.data.spellsDict
+        self.equipment = self.data.equipmentDict
 
         self.raceSelection(C)
         self.classSelection(C)
@@ -310,6 +348,8 @@ class NewCharGui(tk.Tk):
         self.infoBox(C)
         self.subraceSelection(C)
         self.proficincySelection(C)
+        self.spellSelection(C)
+        self.equipmentSelection(C)
         newCharacterWindow.mainloop()
 
     def getSelectionInfo(self):
@@ -318,4 +358,4 @@ class NewCharGui(tk.Tk):
         print("Selections: " + self.raceVar.get())
         print("Class: " + self.classVar.get())
         print("Alignment: "+self.alignmentVar.get())
-        print("level: "+self.levelText.get('1.0',END))
+        print("level: " + self.levelText.get('1.0', END))

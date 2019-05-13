@@ -9,13 +9,13 @@ class DataDictionary():
         self.classNameDict = {i['name']:i['index']-1 for i in self.classes}
         self.raceNameDict = {i['name']:i['index']-1 for i in self.races}
         self.spellsDict = apicalls.getSpellData()
-        self.equpmentDict = apicalls.getEquipmentData()
+        self.equipmentDict = apicalls.getEquipmentData()
 
 #     def retNames(self, var):
 #         for i in var:
 #             print(i["name"])
 
 
-print(DataDictionary().spellsDict)
+#print(DataDictionary().spellsDict)
 # data = DataDictionary()
 # data.retNames(data.classes)
