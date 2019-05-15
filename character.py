@@ -2,7 +2,7 @@ class Character():
     #Init character class
     #Add any new stats here in the same format as the others and add them to the updateAll() function as well
     #Then anywhere that that function is called will have to be updated to include the new values
-    def __init__(self, name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
+    def __init__(self, name, class_type, race, background, alignment, experience, health, armor, equipment, profficiency, stats):
         self.name = name
         self.class_type = class_type
         self.race = race
@@ -10,6 +10,7 @@ class Character():
         self.alignment = alignment
         self.health = health
         self.armor = armor
+        self.equipment = equipment
         self.profficiency = profficiency
         self.experience = experience
         self.stats = stats  #Dictionary of all the stats
@@ -32,6 +33,7 @@ class Character():
         stat_dict.update({"experience": self.experience})
         stat_dict.update({"health": self.health})
         stat_dict.update({"armor": self.armor})
+        stat_dict.update({"equipment": self.equipment})
         stat_dict.update({"profficiency": self.profficiency})
         stat_dict.update({"stats": self.stats})
         return stat_dict
@@ -67,7 +69,7 @@ class Character():
         self.experience = experience
 
     #Updates All
-    def updateAll(self, name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
+    def updateAll(self, name, class_type, race, background, alignment, experience, health, armor, equipment, profficiency, stats):
         self.name = name
         self.class_type = class_type
         self.race = race
@@ -75,6 +77,7 @@ class Character():
         self.alignment = alignment
         self.health = health
         self.armor = armor
+        self.equipment = equipment
         self.profficiency = profficiency
         self.experience = experience
         self.stats = stats  #Dictionary of all the stats

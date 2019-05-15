@@ -51,7 +51,7 @@ class LoadCharGui(tk.Tk):
         with open(os.getcwd() + '/Character_Data/' + filename) as f:
             char_json = json.load(f)
         self.character.updateAll(char_json['name'], char_json['class_type'], char_json['race'], char_json['background'], 
-            char_json['alignment'], char_json['experience'], char_json['health'], char_json['armor'], char_json['profficiency'], char_json['stats'])
+            char_json['alignment'], char_json['experience'], char_json['health'], char_json['armor'], char_json['equipment'],char_json['profficiency'], char_json['stats'])
         self.loadCharacterWindow.destroy()
         #Load back into main here
 

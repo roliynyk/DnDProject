@@ -370,6 +370,7 @@ class NewCharGui(tk.Tk):
                                      int(self.levelText.get('1.0',END)),
                                      self.total_health,
                                      6,
+                                     self.equipVar.get(),
                                      self.proficVar.get(),
                                     {"Str":int(self.str.get('1.0',END)), "Dex":int(self.dex.get('1.0',END)), "Con":int(self.con.get('1.0',END)),
                                     "Int":int(self.int.get('1.0',END)), "Wis":int(self.wis.get('1.0',END)), "Cha":int(self.cha.get('1.0',END))})

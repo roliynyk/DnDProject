@@ -34,7 +34,7 @@ class Frame1(Frame):
         self.C.pack()
 
         #Example caracter creation call and method/variable calls
-        self.Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15, 0, {"Str":1, "Dex":1, "Con":1, "Int":1, "Wis":1, "Cha":1})
+        self.Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15,"Warhammer", "acrobatics", {"Str":1, "Dex":1, "Con":1, "Int":1, "Wis":1, "Cha":1})
 
         #Call new character stuff here
         self.NewCharacterStuff(self.Blarg)
@@ -265,8 +265,8 @@ class Frame1(Frame):
             "\nINT: " + str(stats_dict["Int"]) + "\nWIS: " + str(stats_dict["Wis"]) + "\nCHA: " + str(stats_dict["Cha"]))
         statInfo.place(relx=0.01, rely=0.3)
 
-    def createCharacter(self,name, class_type, race, background, alignment, experience, health, armor, profficiency, stats):
-        return character.Character(name, class_type, race, background, alignment, experience, health, armor, profficiency, stats)
+    def createCharacter(self,name, class_type, race, background, alignment, experience, health, armor, equipment, profficiency, stats):
+        return character.Character(name, class_type, race, background, alignment, experience, health, armor, equipment, profficiency, stats)
 
 class MainWindow(Tk):
     def __init__(self, parent):
