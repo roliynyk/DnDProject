@@ -237,10 +237,10 @@ class Frame1(Frame):
         spells = tk.Button(self, text ="Spells", command = self.spellsButton)
         spells.place(relx=0.15, rely=0.3, width=200, height=30)
 
-        inventory = tk.Button(self, text ="Inventory", command = self.helloCallBack)
+        inventory = tk.Button(self, text ="Inventory", command = self.equipmentButton)
         inventory.place(relx=0.15, rely=0.35, width=200, height=30)
 
-        skills = tk.Button(self, text ="Skills", command = self.helloCallBack)
+        skills = tk.Button(self, text ="Skills", command = self.skillsButton)
         skills.place(relx=0.15, rely=0.40, width=200, height=30)
 
         background = tk.Button(self, text ="Background", command = self.backgroundButton)
@@ -253,6 +253,12 @@ class Frame1(Frame):
     #Function to print the background for the character
     def backgroundButton(self):
         tk.messagebox.showinfo(self.Blarg.name + "'s Background", self.Blarg.background)
+
+    def skillsButton(self):
+        tk.messagebox.showinfo(self.Blarg.name + "'s Skills", self.Blarg.profficiency)
+
+    def equipmentButton(self):
+        tk.messagebox.showinfo(self.Blarg.name + "'s Equipment", self.Blarg.equipment)
 
     #Function for populating the popup window that whows what spells are available to your class
     def spellsButton(self):
