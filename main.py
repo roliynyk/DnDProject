@@ -243,12 +243,16 @@ class Frame1(Frame):
         skills = tk.Button(self, text ="Skills", command = self.helloCallBack)
         skills.place(relx=0.15, rely=0.40, width=200, height=30)
 
-        background = tk.Button(self, text ="Background", command = self.helloCallBack)
+        background = tk.Button(self, text ="Background", command = self.backgroundButton)
         background.place(relx=0.15, rely=0.45, width=200, height=30)
 
     #Function for debugging button presses etc...
     def helloCallBack(self):
         tk.messagebox.showinfo("Hello Python", "Hello World")
+
+    #Function to print the background for the character
+    def backgroundButton(self):
+        tk.messagebox.showinfo(self.Blarg.name + "'s Background", self.Blarg.background)
 
     #Function for populating the popup window that whows what spells are available to your class
     def spellsButton(self):
