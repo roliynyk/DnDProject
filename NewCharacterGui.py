@@ -62,11 +62,13 @@ class NewCharGui(tk.Tk):
         self.levelText.place(relx=0.75, rely=0.11, width=60, height=22)
 
     def spellSelection(self, C):
+
         spells = []
         count = 0
 
         #taking top 20 results for spells since OptionMenu is not scrollable
-        for i in self.spells[0]['results']:
+        for i in self.spells:
+
             if count == 20:
                 break
             else:
@@ -93,7 +95,7 @@ class NewCharGui(tk.Tk):
             else:
                 equipment.append(i['name'])
             count += 1
-        print(equipment)
+        #print(equipment)
 
         tk.Label(C, text="Select Equipment").place(relx=0.2, rely=0.22)
         self.equipVar = tk.StringVar(C)
@@ -169,7 +171,7 @@ class NewCharGui(tk.Tk):
             hitDie = int(self.hitDice)
             hp = 0
             for i in range(1, level+1):
-                print(i)
+                #print(i)
                 if i == 1:
                     hp += hitDie
                 else:
@@ -190,12 +192,6 @@ class NewCharGui(tk.Tk):
         self.background.pack()
         self.background.place(relx=0.01, rely=0.308, width=790, height=180)
 
-    # allows selection of abilities based on class
-    def selectAbilities(self, C):
-        abilities = tk.Button(C, text="Select Abilities")
-        abilities.pack()
-        abilities.place(relx=0.2, rely=0.17, width=130, height=30)
-
     def subraceSelection(self, C):
         subrace = []
         for i in self.races[self.raceDic[self.raceVar.get()]]['subraces']:
@@ -211,7 +207,7 @@ class NewCharGui(tk.Tk):
     def proficincySelection(self, C):
         proficiencies = []
 
-        print(self.classes[self.classDic[self.classVar.get()]])
+        #print(self.classes[self.classDic[self.classVar.get()]])
         for i in self.classes[self.classDic[self.classVar.get()]]['proficiency_choices'][0]['from']:
             proficiencies.append(i['name'].strip('Skill: '))
 
@@ -351,17 +347,13 @@ class NewCharGui(tk.Tk):
         self.infoBox(C)
         self.subraceSelection(C)
         self.proficincySelection(C)
-        #self.spellSelection(C)
+        self.spellSelection(C)
         self.equipmentSelection(C)
         self.newCharacterWindow.mainloop()
 
     def getSelectionInfo(self):
 
         # Example on how to get new selection info, can be used to index into character info dict from api
-        print("Selections: " + self.raceVar.get())
-        print("Class: " + self.classVar.get())
-        print("Alignment: " + self.alignmentVar.get())
-        print("Level: " + self.levelText.get('1.0',END))
         try:
             self.character.updateAll(self.characterName.get('1.0',END),
                                      self.classVar.get(), self.raceVar.get(),
