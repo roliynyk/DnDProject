@@ -336,7 +336,6 @@ class NewCharGui(tk.Tk):
         self.charName(C)
         self.hitPoints(C)
         self.characterBackground(C)
-        self.selectAbilities(C)
         self.constitutionMod(C)
         self.dexterityMod(C)
         self.strengthMod(C)
