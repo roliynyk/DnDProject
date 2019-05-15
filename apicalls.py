@@ -39,10 +39,10 @@ def getSpellData():
 
     spellsDictionary = []
 
-    for i in range(1, 19):
-        spells = requests.get(url + 'spells/'.format(i)).json()
+    for i in range(1, 320):
+        spells = requests.get(url + 'spells/{}'.format(i)).json()
         spellsDictionary.append(spells)
-
+    
     return spellsDictionary
 
 def getEquipmentData():

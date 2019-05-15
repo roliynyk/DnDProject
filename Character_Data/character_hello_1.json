@@ -1,0 +1,20 @@
+{
+    "name": "hello\n",
+    "class_type": "Wizard",
+    "race": "Dwarf",
+    "background": "\n",
+    "alignment": "Neutral",
+    "experience": 12,
+    "health": 54,
+    "armor": 6,
+    "equipment": "Greatclub",
+    "profficiency": "Insight",
+    "stats": {
+        "Str": 1,
+        "Dex": 1,
+        "Con": 1,
+        "Int": 1,
+        "Wis": 1,
+        "Cha": 1
+    }
+}

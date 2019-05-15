@@ -351,7 +351,7 @@ class NewCharGui(tk.Tk):
         self.infoBox(C)
         self.subraceSelection(C)
         self.proficincySelection(C)
-        self.spellSelection(C)
+        #self.spellSelection(C)
         self.equipmentSelection(C)
         self.newCharacterWindow.mainloop()
 

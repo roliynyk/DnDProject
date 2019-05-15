@@ -13,6 +13,13 @@ from os import listdir
 import json
 from functools import wraps
 
+def call_count(function, count=[0]):
+        @wraps(function)
+        def increase_count(*args, **kwargs):
+            count[0] += 1
+            return function(*args, **kwargs), count[0]
+        return increase_count
+
 class Frame1(Frame):
     def __init__(self, parent):
         self.data = LoadData.DataDictionary()
@@ -34,7 +41,7 @@ class Frame1(Frame):
         self.C.pack()
 
         #Example caracter creation call and method/variable calls
-        self.Blarg = self.createCharacter("Blarg", "Brawler", "Elf", "Parents died", "Self", 0, 20, 15,"Warhammer", "acrobatics", {"Str":1, "Dex":1, "Con":1, "Int":1, "Wis":1, "Cha":1})
+        self.Blarg = self.createCharacter("Blarg", "Wizard", "Elf", "Parents died", "Self", 0, 20, 15,"Warhammer", "acrobatics", {"Str":1, "Dex":1, "Con":1, "Int":1, "Wis":1, "Cha":1})
 
         #Call new character stuff here
         self.NewCharacterStuff(self.Blarg)
@@ -49,13 +56,6 @@ class Frame1(Frame):
         self.RollTypes(self.Blarg, self.C)
 
         self.createTextInfo(self.Blarg)
-
-    def call_count(function, count=[0]):
-        @wraps(function)
-        def increase_count(*args, **kwargs):
-            count[0] += 1
-            return function(*args, **kwargs), count[0]
-        return increase_count
 
     @call_count
     def rollDicewithStat(self, toon, stat, sides):
@@ -234,7 +234,7 @@ class Frame1(Frame):
 
     def SpellsEtc(self):
         # Character spells
-        spells = tk.Button(self, text ="Spells", command = self.helloCallBack)
+        spells = tk.Button(self, text ="Spells", command = self.spellsButton)
         spells.place(relx=0.15, rely=0.3, width=200, height=30)
 
         inventory = tk.Button(self, text ="Inventory", command = self.helloCallBack)
@@ -249,6 +249,20 @@ class Frame1(Frame):
     #Function for debugging button presses etc...
     def helloCallBack(self):
         tk.messagebox.showinfo("Hello Python", "Hello World")
+
+    #Function for populating the popup window that whows what spells are available to your class
+    def spellsButton(self):
+        #print(self.data.spellsDict[0])
+        spell_list = []
+        for spells in self.data.spellsDict:
+            #print(spells['classes'][0]['name'])
+            if spells['classes'][0]['name'] == self.Blarg.class_type:
+                spell_list.append(spells['name'])
+        if spell_list:
+            #print(spell_list)
+            tk.messagebox.showinfo("Spells for " + self.Blarg.class_type, "\n".join(spell_list))
+        else:
+            tk.messagebox.showinfo("Spells for " + self.Blarg.class_type, "Your class has no spells available")
 
     # Create text for the character such as name and stats
     def createTextInfo(self, character):
