@@ -192,12 +192,6 @@ class NewCharGui(tk.Tk):
         self.background.pack()
         self.background.place(relx=0.01, rely=0.308, width=790, height=180)
 
-    # allows selection of abilities based on class
-    def selectAbilities(self, C):
-        abilities = tk.Button(C, text="Select Abilities")
-        abilities.pack()
-        abilities.place(relx=0.2, rely=0.17, width=130, height=30)
-
     def subraceSelection(self, C):
         subrace = []
         for i in self.races[self.raceDic[self.raceVar.get()]]['subraces']:
