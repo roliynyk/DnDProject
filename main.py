@@ -102,6 +102,7 @@ class Frame1(Frame):
         self.createTextInfo(self.Blarg)
 
     def SaveChar(self, character):
+        character.updateHealthEtc(int(self.listBoxH.get()), int(self.listBoxA.get()), int(self.listBoxX.get()))
         #Open new .txt file and save character data in json
         #Can add functionality to name files after the character name and update if the save already exists
         counter = 1
@@ -175,8 +176,8 @@ class Frame1(Frame):
         self.listBoxX.pack()
         self.listBoxX.place(relx=0.6, rely=0.19, width=60, height=22)
 
-        update = tk.Button(self, text="Update", command = lambda: character.updateHealthEtc(int(self.listBoxH.get()), int(self.listBoxA.get()), int(self.listBoxX.get())))
-        update.place(relx=0.85, rely=0.025, width=100, height=30)
+        #update = tk.Button(self, text="Update", command = lambda: character.updateHealthEtc(int(self.listBoxH.get()), int(self.listBoxA.get()), int(self.listBoxX.get())))
+        #update.place(relx=0.85, rely=0.025, width=100, height=30)
 
     def RollTypes(self, toon, C):
         # Roll types
